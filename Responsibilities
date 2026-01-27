@@ -1,0 +1,22 @@
+My responsibilities:
+    - [ ] Writing to Notes File for person
+    - [ ] Reading from Notes File
+    - [ ] Displaying chosen decrypted note to user
+    - [ ] Creating new directories ///
+    - [ ] Deleting note files ///
+    - [ ] Creating new note files
+    - [x] Create GitHub repository with each person’s account added
+
+John’s responsibilities:
+    - [ ] Encrypting file content
+    - [ ] Decrypting file content ?
+    - [ ] User settings ?? / ie only a logged in user
+
+Afonso’s responsibilities:
+    - [ ] Summarize decrypted file content in a directory
+    - [ ] Summarize note file
+
+Roman’s responsibilities:
+    - [ ] Home Server
+    - [ ] Decrypting file content ?
+    - [ ] User settings ?? / ie only a logged in user
