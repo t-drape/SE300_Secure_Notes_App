@@ -1,0 +1,83 @@
+Requirements Document
+
+The software shall be a command-line interface tool
+The software shall allow the user to create a new note
+The software shall allow the user to summarize a written note
+The software shall allow the user to append to a written note
+The software shall allow the user to display a written note
+The software shall confirm the user’s selected action
+The software shall perform input validation for all actions
+The software shall confirm that the user wishes to delete a chosen note
+
+Encryption:
+	The software shall encrypt a user’s written note prior to saving
+	The software shall decrypt a user’s saved note prior to displaying
+
+ML:
+	The software shall allow a user to summarize a chosen note
+	The software shall perform keyword analysis on the note
+
+
+
+
+
+
+
+
+Acronyms:
+	HC = Host computer
+	TSC = Terminal start command
+	CLI = Command-line interface
+	SUD = Software under development
+
+4. Feature List:
+	The SUD shall allow the user to create a new note
+	The SUD shall allow the user to summarize a written note
+	The SUD shall allow the user to append to a written note
+	The SUD shall allow the user to display a written note
+	The SUD shall encrypt a user’s written note prior to saving
+	The SUD shall decrypt a user’s saved note prior to displaying
+	The SUD shall allow a user to summarize a chosen note
+	The SUD shall provide the user with a CLI-based menu from which to choose an action
+
+5. Use Cases:
+	
+
+6. User Requirements:
+	The SUD shall be available online as a public GitHub repository
+
+9. Interface Requirements:
+	The HC shall have a terminal from which the software will run (upon TSC)
+	The HC shall have a typing interface
+
+10. Performance Requirements:
+	The SUD shall encrypt a file of size 1MB within 10 seconds
+	The SUD shall decrypt a file of size 1MB within 10 seconds
+	The SUD shall summarize a file of size 1MB within 15 seconds
+	The SUD shall begin running within 1 second after TSC 
+
+11. Availability Requirements:
+	N/A
+
+12. Safety Requirements:
+	N/A
+
+13. Security Requirements:
+	The SUD shall not expose file contents outside of the program
+	The SUD shall have write permissions on the HC
+	The SUD shall have read permissions on the HC
+
+15. External System Requirements:
+	The HC shall have Python 3.10 or later installed
+
+16. Quality Assurance Requirements:
+	The SUD shall have at least 3 tests for each program functionality
+
+17. Document Requirements:
+	The SUD shall be delivered with a set-up manual called “instructions.txt”.
+	The SUD shall have a well-documented README file detailing our development process
+
+18. Trace Tags:
+
+
+Each element will have a trace tag, numbered 1 to whatever, and will be appended to the end of the function
