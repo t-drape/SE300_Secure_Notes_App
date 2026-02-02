@@ -16,6 +16,8 @@ Encryption:
 ML:
 	The software shall allow a user to summarize a chosen note
 	The software shall perform keyword analysis on the note
+	The software shall handle notes up to (still to be decided)MB for summarization and keyword analysis without crashing, and shall notify the user if the note exceeds the supported size.
+
 
 
 
@@ -57,10 +59,13 @@ Acronyms:
 	The SUD shall begin running within 1 second after TSC 
 
 11. Availability Requirements:
-	N/A
+	The SUD shall allow access to previously saved notes
+
+
 
 12. Safety Requirements:
-	N/A
+	The SUD shall provide a safe cancel option at every destructive or irreversible step (e.g., delete note, overwrite note).
+	The SUD shall not terminate unexpectedly on invalid input, it shall display an error message
 
 13. Security Requirements:
 	The SUD shall not expose file contents outside of the program
