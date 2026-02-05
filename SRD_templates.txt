@@ -19,20 +19,6 @@ ML:
 	The software shall handle notes up to (still to be decided)MB for summarization and keyword analysis without crashing, and shall notify the user if the note exceeds the supported size.
 
 
-
-
-
-
-
-
-
-Acronyms:
-	HC = Host computer
-	TSC = Terminal start command
-	CLI = Command-line interface
-	SUD = Software under development
-	AI = Artificial Intelligence
-
 1. Introduction and Purpose:
 	We are building a secure, local-hosted, terminal-based notes app powered by AI. The user will have access to reading past notes, writing new notes, and summarizing an old note. The intended purpose of the program is to give users a minimalistic, encryption-secured notes app to track and write anything, without fear of their data falling into the wrong hands. 
 
