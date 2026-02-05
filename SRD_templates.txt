@@ -20,6 +20,8 @@ Requirements Document
 
 
 4. Feature List:
+	<NOTE: Instead of formal requiremnets, add a brief description, in paragraph form, like an app description>
+	
 	The SUD shall allow the user to create a new note
 	The SUD shall allow the user to summarize a written note
 	The SUD shall allow the user to append to a written note
