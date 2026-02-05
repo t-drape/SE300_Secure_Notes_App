@@ -96,6 +96,7 @@ Requirements Document
 	The SUD shall have a well-documented README file detailing our development process
 
 18. Trace Tags:
-
-
-Each element will have a trace tag, numbered 1 to whatever, and will be appended to the end of the function
+	Each requirement will have a trace tag, numbered 1 to whatever, and will be appended to the end of the function
+	Each team member has a unique trace tag identifier (Roman = 1, Afonso = 2, TJ = 3, John = 4)
+	The identifiers will be appened to the function names with first number denoting author and following numbers denoting requiremnt trace tag
+	Example: my_function_3_001(), written by TJ, satisfies requiremnt 001
