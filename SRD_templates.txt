@@ -31,6 +31,26 @@ Acronyms:
 	TSC = Terminal start command
 	CLI = Command-line interface
 	SUD = Software under development
+	AI = Artificial Intelligence
+
+1. Introduction and Purpose:
+	We are building a secure, local-hosted, terminal-based notes app powered by AI. The user will have access to reading past notes, writing new notes, and summarizing an old note. The intended purpose of the program is to give users a minimalistic, encryption-secured notes app to track and write anything, without fear of their data falling into the wrong hands. 
+
+	1.1 Acronyms:
+		HC = Host computer
+		TSC = Terminal start command
+		CLI = Command-line interface
+		SUD = Software under development
+		AI = Artificial Intelligence
+
+2. Business Objectives:
+	We are creating the SUD to apply the software methods we have learned from SE300 to a project. We intend to perform the common software lifecycle methods through this project. Additionally, we wish to create a resume-worthy application as we compete for summer internships, showcasing our software engineering expertise.
+
+3. User Personas/Roles
+	Privacy-conscious consumer: Our main user category, someone who distrsuts the current note-taking solutions, prefers self-hosted applications due to privacy concerns with large tech companies or cloud-based software.
+	Application enthusiast: A secondary consumer category, someone who enjoys testing and using new technologies, and does not stick with a single product unless it truly solves a problme in their life. 
+
+	ALL CONSUMERS MUST BE ABLE TO ACCESS AND COPY/PASTE CODE FROM GITHUB REPOSITORY INTO TERMINAL
 
 4. Feature List:
 	The SUD shall allow the user to create a new note
@@ -43,10 +63,28 @@ Acronyms:
 	The SUD shall provide the user with a CLI-based menu from which to choose an action
 
 5. Use Cases:
+	The SUD shall allow a user to run the SUD using a TSC
+	The SUD shall allow a user to choose an action from the given action menu
+	The SUD shall disallow invalid menu choices
+	The SUD shall perform the desired action from the given action menu that the user chose
+	The SUD shall never expose the plain-text contents of a file outside of the SUD
 	
 
 6. User Requirements:
 	The SUD shall be available online as a public GitHub repository
+	The SUD shall be cloned into a directory on the HC
+	The user shall ne able to access the terminal on the HC
+	The user shall be able to copy/paste
+
+7. Functional Requirements:
+	The SUD shall allow the user to create a new note
+	The SUD shall allow the user to summarize a written note
+	The SUD shall allow the user to append to a written note
+	The SUD shall allow the user to display a written note
+	The SUD shall encrypt a user’s written note prior to saving
+	The SUD shall decrypt a user’s saved note prior to displaying
+	The SUD shall allow a user to summarize a chosen note
+	
 
 9. Interface Requirements:
 	The HC shall have a terminal from which the software will run (upon TSC)
@@ -60,8 +98,6 @@ Acronyms:
 
 11. Availability Requirements:
 	The SUD shall allow access to previously saved notes
-
-
 
 12. Safety Requirements:
 	The SUD shall provide a safe cancel option at every destructive or irreversible step (e.g., delete note, overwrite note).
