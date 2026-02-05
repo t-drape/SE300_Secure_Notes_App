@@ -60,7 +60,6 @@ Requirements Document
 	The software shall display the user's chosen action
 	The SUD shall notify the user if the note exceeds the supported size for summarization
 	The SUD shall notify the user if the note exceeds a supported file size
-	
 
 9. Interface Requirements:
 	The HC shall have a terminal from which the software will run (upon TSC)
@@ -84,6 +83,9 @@ Requirements Document
 	The SUD shall not expose file contents outside of the program
 	The SUD shall have write permissions on the HC
 	The SUD shall have read permissions on the HC
+
+14. Design and Implementation Constraints:
+	N/A
 
 15. External System Requirements:
 	The HC shall have Python 3.10 or later installed
