@@ -14,7 +14,7 @@ Requirements Document
 2. Business Objectives:
 	We are creating the SUD to apply the software methods we have learned from SE300 to a project. We intend to perform the common software lifecycle methods through this project. Additionally, we wish to create a resume-worthy application as we compete for summer internships, showcasing our software engineering expertise.
 
-3. User Personas/Roles
+3. User Personas/Roles:
 	Privacy-conscious consumer: Our main user category, someone who distrsuts the current note-taking solutions, prefers self-hosted applications due to privacy concerns with large tech companies or cloud-based software.
 	Application enthusiast: A secondary consumer category, someone who enjoys testing and using new technologies, and does not stick with a single product unless it truly solves a problme in their life. 
 
