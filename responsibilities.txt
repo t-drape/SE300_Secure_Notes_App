@@ -15,6 +15,7 @@ John’s responsibilities:
 Afonso’s responsibilities:
     - [ ] Summarize decrypted file content in a directory
     - [ ] Summarize note file
+    - [ ] Error handling and user feedback messages
 
 Roman’s responsibilities:
     - [ ] Home Server
