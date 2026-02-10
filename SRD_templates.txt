@@ -36,6 +36,7 @@ Requirements Document
 	The SUD shall provide the user with a CLI-based menu from which to choose an action
 	The SUD shall allow the user to save a new note
 
+
 5. Use Cases:
 	The SUD shall allow a user to run the SUD using a TSC
 	The SUD shall allow a user to choose an action from the given action menu
@@ -66,6 +67,7 @@ Requirements Document
 	The software shall display the user's chosen action
 	The SUD shall notify the user if the note exceeds the supported size for summarization
 	The SUD shall notify the user if the note exceeds a supported file size
+	The SUD shall allow the user to delete a saved note
 
 9. Interface Requirements:
 	The HC shall have a terminal from which the software will run (upon TSC)
