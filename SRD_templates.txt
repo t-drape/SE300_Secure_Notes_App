@@ -20,6 +20,10 @@ Requirements Document
 
 
 4. Feature List:
+
+	The Software Under Development (SUD) is a local, command-line-based secure notes application that allows users to create, view, append to, delete, and summarize personal notes. All notes are encrypted before being stored on the host computer and are only decrypted in memory when displayed to the user. The application provides a menu-driven interface that guides the user through all available actions and validates all user input. The SUD also provides basic AI functionality, including note summarization and keyword analysis, while ensuring that plaintext note contents are never exposed outside of the application.
+
+	(IF WE ALL AGREE WE CAN DELETE THIS BOTTOM PART)
 	<NOTE: Instead of formal requiremnets, add a brief description, in paragraph form, like an app description>
 	
 	The SUD shall allow the user to create a new note
