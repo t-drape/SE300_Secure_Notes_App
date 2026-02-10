@@ -16,7 +16,7 @@ Requirements Document
 
 3. User Personas/Roles:
 	Privacy-conscious consumer: Our main user category, someone who distrsuts the current note-taking solutions, prefers self-hosted applications due to privacy concerns with large tech companies or cloud-based software.
-	Application enthusiast: A secondary consumer category, someone who enjoys testing and using new technologies, and does not stick with a single product unless it truly solves a problme in their life. 
+	Application enthusiast: A secondary consumer category, someone who enjoys testing and using new technologies, and does not stick with a single product unless it truly solves a problem in their life. 
 
 
 4. Feature List:
