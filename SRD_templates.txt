@@ -87,6 +87,10 @@ Requirements Document
 	The SUD shall provide a safe cancel option at every destructive or irreversible step (e.g., delete note, overwrite note).
 	The SUD shall not terminate unexpectedly on invalid input, it shall display an error message
 
+	<NOTE: Split into two requirements>
+	The SUD shall not terminate unexpectedly on invalid input
+	The SUD shall display an error message when given invalid input
+
 13. Security Requirements:
 	The SUD shall derive encryption keys from a user provided password using PBKDF2 (Password-Based Key Derivation Function 2)
 	The SUD shall not store the encryption password or key in plaintext anywhere on the HC
