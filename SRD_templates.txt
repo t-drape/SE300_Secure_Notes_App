@@ -65,9 +65,22 @@ Requirements Document
 	The software shall confirm if a user chooses to delete a note
 	The software shall perform input validation for all user interactions
 	The software shall display the user's chosen action
+	The SUD shall allow the user to delete a saved note
 	The SUD shall notify the user if the note exceeds the supported size for summarization
 	The SUD shall notify the user if the note exceeds a supported file size
-	The SUD shall allow the user to delete a saved note
+
+<NOTE: Review with team>
+8. Non-functional Requirements
+	The SUD shall encrypt all file content created within the program
+	The SUD shalll decrypt file contents within 10 seconds of a user request
+	The SUD shall require no more than 3 minutes to set-up
+	The SUD shall require no external storage
+	The SUD shall perform keyword analysis on a 10MB file in under 19 seconds
+	The SUD shall require a password verification to access
+	The SUD shall have a menu where user's type in their desired action
+	The SUD shall use a key map of numbers to actions (like, press 1 for new note, press 2 for summary, etc.)
+	The cloning of the SUD repository shall take no more than 10 seconds
+	
 
 9. Interface Requirements:
 	The HC shall have a terminal from which the software will run (upon TSC)
@@ -97,7 +110,13 @@ Requirements Document
 	The SUD shall not provide password recovery mechanisms (design choice for maximum security)???
 	The SUD shall encrypt all notes using AES-256 encryption before saving to the HC
 	The SUD shall not expose file contents outside of the program
+
 	The SUD shall display an error message if encryption/decryption fails
+
+	<NOTE: Split into two requirements>
+	The SUD shall display an error message if encryption fails
+	The SUD shall display an error message if decryption fails
+
 	The SUD shall have write permissions on the HC
 	The SUD shall have read permissions on the HC
 
@@ -115,7 +134,7 @@ Requirements Document
 	The SUD shall have a well-documented README file detailing our development process
 
 18. Trace Tags:
-	Each requirement will have a trace tag, numbered 1 to whatever, and will be appended to the end of the function
+	Each requirement will have a trace tag, numbered 1 to whatever, and will be appended to the end of functions that complete the requirement
 	Each team member has a unique trace tag identifier (Roman = 1, Afonso = 2, TJ = 3, John = 4)
 	The identifiers will be appened to the function names with first number denoting author and following numbers denoting requiremnt trace tag
 	Example: my_function_3_001(), written by TJ, satisfies requiremnt 001
