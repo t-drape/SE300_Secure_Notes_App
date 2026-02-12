@@ -107,7 +107,7 @@ Requirements Document
 13. Security Requirements:
 	The SUD shall derive encryption keys from a user provided password using PBKDF2 (Password-Based Key Derivation Function 2)
 	The SUD shall not store the encryption password or key in plaintext anywhere on the HC
-	The SUD shall not provide password recovery mechanisms (design choice for maximum security)???
+	The SUD shall not provide password recovery mechanisms (design choice for maximum security)
 	The SUD shall encrypt all notes using AES-256 encryption before saving to the HC
 	The SUD shall not expose file contents outside of the program
 
