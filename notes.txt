@@ -11,3 +11,6 @@ Move requirements from wrong domain sections
 
 
 Review-Driven Modificaitions:
+
+Expand feature list for secure notes application. Turn feature list into a descriptive paragraph.
+
