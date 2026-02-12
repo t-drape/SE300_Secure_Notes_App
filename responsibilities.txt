@@ -2,8 +2,6 @@ My responsibilities:
     - [ ] Writing to Notes File for person
     - [ ] Reading from Notes File
     - [ ] Displaying chosen decrypted note to user
-    - [ ] Creating new directories ///
-    - [ ] Deleting note files ///
     - [ ] Creating new note files
     - [x] Create GitHub repository with each person’s account added
 
@@ -21,3 +19,5 @@ Roman’s responsibilities:
     - [ ] Home Server
     - [ ] Decrypting file content ?
     - [ ] User settings ?? / ie only a logged in user
+    - [ ] Creating new directories ///
+    - [ ] Deleting note files ///
