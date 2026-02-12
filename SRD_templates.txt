@@ -82,6 +82,8 @@ Requirements Document
 	The cloning of the SUD repository shall take no more than 10 seconds
 	The SUD shall require a user generated password of at least 8 characters for encrypting/decrypting notes
 	The SUD shall operate fully offline without requiring an internet connection
+	The SUD shall handle database interactions in under 5 seconds
+	The related database shall maintain a 98% uptime throughout use
 
 9. Interface Requirements:
 	The HC shall have a terminal from which the software will run (upon TSC)
