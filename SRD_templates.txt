@@ -83,6 +83,7 @@ Requirements Document
 
 11. Availability Requirements:
 	The SUD shall allow access to previously saved notes
+	The SUD shall remain available to the user as long as the HC is operational
 
 12. Safety Requirements:
 	The SUD shall provide a safe cancel option at every destructive or irreversible step (e.g., delete note, overwrite note).
