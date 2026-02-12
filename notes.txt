@@ -1,0 +1,10 @@
+Notes from Initial SRD Review:
+
+Split non-atomic requirements into several atomic requirements
+Add feature-specific requirements for encryption/decryption
+Add runtime requirements for database functionality
+Add non-functional requirements
+Rearrange requirements for better document flow
+Remove repeated requirements in feature list
+Describe product usage in feature list instead of creating formal requirements
+Move requirements from wrong domain sections
