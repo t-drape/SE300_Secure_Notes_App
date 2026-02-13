@@ -14,6 +14,6 @@ Move requirements from wrong domain sections
 Review-Driven Modificaitions:
 
 Expand feature list for secure notes application. Turn feature list into a descriptive paragraph.
-Elaborate on encryption methods to me implemented in the SUD.
-
-
+Elaborate on encryption methods to be implemented in the SUD.
+Move several non-functional requirements into other, more suitable areas like performance requirements.
+Move mislabeled requirements into approriate sections, like from availabilty to security requirement. 
