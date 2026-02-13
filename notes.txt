@@ -2,6 +2,7 @@ Notes from Initial SRD Review:
 
 Split non-atomic requirements into several atomic requirements
 Add feature-specific requirements for encryption/decryption
+Add user password requirements for encryption/decryption 
 Add runtime requirements for database functionality
 Add non-functional requirements
 Rearrange requirements for better document flow
@@ -13,4 +14,6 @@ Move requirements from wrong domain sections
 Review-Driven Modificaitions:
 
 Expand feature list for secure notes application. Turn feature list into a descriptive paragraph.
+Elaborate on encryption methods to me implemented in the SUD.
+
 
