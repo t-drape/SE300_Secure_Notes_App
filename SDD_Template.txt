@@ -1,0 +1,38 @@
+SDD Template
+
+1. Introduction and Purpose:
+
+
+
+
+1.1 Acronyms, Terms and References:
+
+
+2 Design Considerations:
+
+
+2.1 Assumptions and Dependencies:
+
+
+2.2 Design Constraints:
+
+
+2.3 Goals and Guidelines:
+
+
+2.4 Development Methods:
+
+
+3 High-Level Design (HLD):
+
+
+
+4 Low-Level Design (LLD):
+
+
+
+5 Trace Tags:
+
+
+Appendix:
+Design Analysis & Review:
