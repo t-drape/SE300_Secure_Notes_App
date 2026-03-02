@@ -14,12 +14,13 @@ LDD: Low-Level Design
 SDD: Software Design Document
 SUD: System Under Development
 HC: Host Computer
+SRD: Software Requirements Document
 
 Terms:
 N/A
 
 References:
-N/A
+Secure Notes Application SRD / SRD_templates.txt   **** Placeholder for now: We should give the SRD a more appropriate naming convention. I can only see the SRD grade but cant see what our submission was titled ****
 
 2 Design Considerations:
 
@@ -43,9 +44,16 @@ The design also anticipates possible future enhancements, such as additional AI 
 
 2.2 Design Constraints:
 
+As currently specified in SRD_templates.txt ***UPDATE WITH ACTUAL DOCUMENT NAME ***, there are no constraints placed on the SUD's design and none are levied herein. That said, the design has been constructed such taht the potential upgrades mentioned in section 2.1 should be easily accomodated.
 
 2.3 Goals and Guidelines:
 
+The SUD has been designed with modifiability, maintainability, security, and performance in mind (see Section 2.1 for potential changes). Consequently, sound software design principles have been emphasized, especially:
+    - Modularity and information hiding: The design separates concerns to enable independent modification and testing of encryption, note management, user interface, and AI processing              functionality.
+    - Loose coupling between modules: Dependencies are minimized to allow changes without cascading effects throughout the system.
+    - High cohesion within modules: Each module has a single, well-defined responsibility.
+    - Partitioning volatility: Components likely to change are isolated from stable components to accommodate future requirements with minimal impact.
+    - Security focused design: The architecture enforces AES-256 encryption, PBKDF2 key derivation, and ensures plaintext content never persists outside application memory.
 
 2.4 Development Methods:
 
