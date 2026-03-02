@@ -9,12 +9,37 @@ The System Under Development (SUD) is a local, command-line-based secure notes a
 
 1.1 Acronyms, Terms and References:
 
+HDD: High-Level Design
+LDD: Low-Level Design
+SDD: Software Design Document
+SUD: System Under Development
+HC: Host Computer
+
+Terms:
+N/A
+
+References:
+N/A
 
 2 Design Considerations:
 
+The design of the SUD is primarily shaped by its security and privacy requirements. Since the application handles personal notes, protecting user data is the most important consideration. All notes must remain encrypted when stored on the Host Computer.
+
+Another key consideration is that the SUD operates entirely offline using a command-line interface. This means all functionality must run locally without relying on external servers, databases, or network connections. The design must therefore securely manage data persistence using local files while maintaining a clear separation between encrypted storage and runtime operations.
+
+Modularity is also a major focus. The system is divided into separate components for file handling, encryption, AI processing, and user interaction. This separation keeps responsibilities clear, reduces complexity, and makes the system easier to test and maintain.
+
+Performance and reliability are additional considerations. Encryption, decryption, and summarization operations must meet the time requirements defined in the SRD. The design must also avoid uncontrolled behavior, such as infinite loops or unsafe state transitions, to ensure the system can be verified and tested effectively.
 
 2.1 Assumptions and Dependencies:
 
+The SUD is designed to operate on a Host Computer with Python 3.10 or later installed. It assumes the user has access to a functioning command-line interface and can execute Python scripts. The system relies on the local file system to store encrypted note files and therefore requires read and write permissions within the project directory.
+
+The design assumes compatibility with common operating systems that support Python and standard file system operations, including Windows, macOS, and Linux. No operating system–specific features are required, and the SUD is intended to remain platform-independent.
+
+The SUD does not require internet connectivity, external servers, or database systems. All functionality is expected to run locally without reliance on network services.
+
+The design also anticipates possible future enhancements, such as additional AI functionality, alternative user interfaces (e.g., graphical interface), or expanded note management features. The system's modular structure is intended to support such extensions without requiring major architectural changes.
 
 2.2 Design Constraints:
 
