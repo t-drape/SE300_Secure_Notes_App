@@ -1,0 +1,1 @@
+This folder contains our High-level design diagrams noting how our classes interact and the overall program flow.
