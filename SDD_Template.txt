@@ -59,6 +59,11 @@ The SUD has been designed with modifiability, maintainability, security, and per
 
 2.4 Development Methods:
 
+The team first created the Software Requirements Document (SRD) to define the system’s functional and non-functional requirements. This Software Design Document (SDD) builds on those requirements by describing how the system will be structured and implemented.
+
+The team uses a modular design approach. Each major part of the system is developed as a separate component with a clear responsibility. For example, different modules handle file management, encryption and decryption, AI processing, and user interaction. This separation allows team members to work on different parts of the system while keeping the overall design organized and easier to maintain.
+
+The team also follows an incremental development process. We implement and test individual modules before integrating them into the full system. This approach helps us catch errors early and verify that each component works as intended before combining it with the rest of the system.
 
 3 High-Level Design (HLD):
 
