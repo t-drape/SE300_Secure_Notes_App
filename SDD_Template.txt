@@ -67,7 +67,19 @@ The team also follows an incremental development process. We implement and test 
 
 3 High-Level Design (HLD):
 
+This section presents the high-level architectural decomposition of the Secure Notes Application (SUD). The design is informed by the functional and non-functional requirements defined in the SRD as well as the use-case, sequence, and class diagrams produced during the design phase.
 
+3.1  Top-Level Functional View
+The SUD accepts user actions through a menu-driven CLI, delegates security operations to a dedicated Security Manager, and saves encrypted data to the local file system. The system has one primary actor (the User) and one secondary actor (the local file system, referred to as Database).
+    The six top-level use cases derived from the SRD and the use-case diagram are:
+        •	Create Note — the user creates a new note; the system encrypts and saves it.
+        •	Display Note (Read) — the user selects a saved note; the system decrypts and displays it in memory only.
+        •	Change Note (Append) — the user selects a saved note to make changes to; the system decrypts, appends new content, re-encrypts, and saves.
+        •	Summarize Note — the user selects a note; the system decrypts it, passes plaintext to the AI module, and displays the plaintext summary.
+        •	Delete Note — the user selects a note for deletion; the system requests confirmation then removes the file permanently.
+        •	Save Note — an operation that follows the Create/Append note that writes the encrypted note to the local file system.
+
+    
 
 4 Low-Level Design (LLD):
 
