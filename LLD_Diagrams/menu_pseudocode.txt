@@ -1,16 +1,16 @@
--save(string file):
+-save(string file): SDD_TT_3_001
   file = filename,
   Encrypt file contents from writing window,
   Save encrypted file content to DB under filename
 
 
--generate_filename():
+-generate_filename(): SDD_TT_3_002
   Find current date,
   Map to appropriate filename, like 03_10_26 for March 10th, 2026
   Return filename
 
 
--choose_file():
+-choose_file(): SDD_TT_3_003
   Print message for user input,
   If file exists,
     Return filename
@@ -18,7 +18,7 @@
     Return to start of program
 
 
--confirm_delete():
+-confirm_delete(): SDD_TT_3_004
   Print message for user input,
   If user input = confirmation,
     Return true
@@ -26,7 +26,7 @@
     Return false
 
 
--new_note():
+-new_note(): SDD_TT_3_005
   Generate filename,
   If no written content,
     Don't save file
@@ -34,14 +34,14 @@
     Save file under filename (call save function)
 
 
--display(string file):
+-display(string file): SDD_TT_3_006
   file = filename,
   Get file from DB,
   Decrypt file contents and save them to a temporary file,
   Open temporary file in read-only mode
 
 
--append(string file):
+-append(string file): SDD_TT_3_007
   file = filename, 
   Get file of filename from DB,
   Save decrypted file contents to temporary file,
@@ -49,7 +49,7 @@
   Save file (call the Save function)
 
 
--summarize(string file):
+-summarize(string file): SDD_TT_3_008
   file = filename,
   Get file of filename from DB,
   Decrypt file contents and write to a temporary file,
@@ -58,17 +58,17 @@
   Display returned file contents
 
 
--delete(strng file):
+-delete(strng file): SDD_TT_3_009
   file = filename,
   Call DB delete function, passing filename parameter
 
 
--select():
+-select(): SDD_TT_3_010
   Print message for user input for chosen action,
   Return input
 
 
-+act():
++act(): SDD_TT_3_011
   Call select function,
   Map input to action,
     1) New Note:
