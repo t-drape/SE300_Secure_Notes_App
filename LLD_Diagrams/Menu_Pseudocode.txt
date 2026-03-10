@@ -1,0 +1,93 @@
+-save(string file):
+  file = filename,
+  Encrypt file contents from writing window,
+  Save encrypted file content to DB under filename
+
+
+-generate_filename():
+  Find current date,
+  Map to appropriate filename, like 03_10_26 for March 10th, 2026
+  Return filename
+
+
+-choose_file():
+  Print message for user input,
+  If file exists,
+    Return filename
+  Else,
+    Return to start of program
+
+
+-confirm_delete():
+  Print message for user input,
+  If user input = confirmation,
+    Return true
+  Else,
+    Return false
+
+
+-new_note():
+  Generate filename,
+  If no written content,
+    Don't save file
+  Else,
+    Save file under filename (call save function)
+
+
+-display(string file):
+  file = filename,
+  Get file from DB,
+  Decrypt file contents and save them to a temporary file,
+  Open temporary file in read-only mode
+
+
+-append(string file):
+  file = filename, 
+  Get file of filename from DB,
+  Save decrypted file contents to temporary file,
+  Open temporary file in append mode in writing window,
+  Save file (call the Save function)
+
+
+-summarize(string file):
+  file = filename,
+  Get file of filename from DB,
+  Decrypt file contents and write to a temporary file,
+  Call the AI class summary function and pass the decrypted temporary file,
+  Get return value from AI summary function,
+  Display returned file contents
+
+
+-delete(strng file):
+  file = filename,
+  Call DB delete function, passing filename parameter
+
+
+-select():
+  Print message for user input for chosen action,
+  Return input
+
+
++act():
+  Call select function,
+  Map input to action,
+    1) New Note:
+        Call new_note function
+    2) Display Note:
+        Call choose_file function,
+        Pass file to display function
+    3) Change Note:
+        Call choose_file function,
+        Pass file to append function
+    4) Summarize Note:
+        Call choose_file function,
+        Pass file to summarize function
+    5) Delete Note:
+        Call choose_file function,
+        Pass file to delete function
+      
+    
+    
+      
+    
+      
