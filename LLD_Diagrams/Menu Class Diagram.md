@@ -1,16 +1,16 @@
 ```mermaid
 classDiagram
     class Menu {
-        +int select_action
         -save(file)
         -generate_filename()
-        -act(selected_action)
+        -choose_file()
         -confirm_delete()
-        +new_note(file)
-        +display(file)
-        +append(file)
-        +summarize(file)
-        +delete(file)
-        +select()
+        -new_note(file)
+        -display(file)
+        -append(file)
+        -summarize(file)
+        -delete(file)
+        -select()
+        +act(selected_action)
     }
 ```
