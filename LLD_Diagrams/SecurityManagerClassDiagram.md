@@ -1,10 +1,7 @@
 ```mermaid
 classDiagram
     class SecurityManager {
-        -key
-        -salt
-        +__init__()
-        +derive_key_from_password(password)
+        -derive_key_from_password(password, salt)
         +encrypt_note(plaintext, password)
         +decrypt_note(ciphertext, password)
         +validate_password(password)
