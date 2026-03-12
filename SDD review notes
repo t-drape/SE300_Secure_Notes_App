@@ -11,7 +11,18 @@ SECURITY MANAGER REVIEW UPDATES MADE- JOHN
   a.	Only encrypt_note() and decrypt_note() are now public. Everything else (derive_key_from_password, validate_password, handle_encryption_error, handle_decryption_error) is private. If you need to encrypt or decrypt something you call one of those two methods.
 
 MENU -TJ
-1. few things require attention here. Consider adding get_password() which runs at app launch. Password now gets passed as a parameter into save, display, append, and summarize. Temp files are gone, replaced with in-memory variables. save() now calls SecurityManager.encrypt_note() instead of doing crypto itself. display, append, and summarize all explicitly call SecurityManager.decrypt_note(). 
+1. few things require attention here. Consider adding get_password() which runs at app launch. Password now gets passed as a parameter into save, display, append, and summarize. Temp files are gone, replaced with in-memory variables. save() now calls SecurityManager.encrypt_note() instead of doing crypto itself. display, append, and summarize all explicitly call SecurityManager.decrypt_note().
+
+1. Single App-Level Password variable and function
+  Why? Resolves the Password issues raised by John.
+  a. Add private password variable to Menu class
+  b. Add public member get_password() that prompts the user for a password and saves it to the password variable. 
+2. Temporary Files
+  a. Throughout the menu class, I used the syntax of passing and writing temporary files. These files exists nowhere in persistent memory. Noting the difference of definitions between John and I, I have since added a definition of temporary file to the document. This clarification ensures the SDD doesn't violate SRD::T_05 or SRD::T_50.
+
+Review Considerations:
+  Add a persistent password field to the database. Upon the TSC, we can query the user input from get_password() against this value (encrypted version saved, so encrypt user input). If they match, allow the user to access the program. Otherwise, run the PEC.
+  
 
 
 DATABASE – ROMAN
