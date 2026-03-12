@@ -93,7 +93,6 @@
     Call get_password
 
 
-
 +act(): SDD_TT_3_014 :: SRD::T_02, SRD::T_21, SRD::T_22, SRD::T_30, SRD::T_39, SRD::T_44
   Call select function,
   Map input to action,
