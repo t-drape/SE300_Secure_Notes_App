@@ -1,0 +1,37 @@
+ - create_directory(directory_name)
+	create table (dname) with values
+	select table
+	if table_name matches directory_name,
+		return 0
+	else,
+		return 1
+
+ - create_note(directory_name, note_info)
+	find_current_date()
+	insert (note_info) into (directory_name)
+	return new_note (confirmation) or None (fail)
+
+ - get_directories(None)
+ 	select all tables from master sheet
+	return list of tables
+
+ - delete_note(note_id, directory_name)
+ 	{note: this comes after menu asks for confirmation.
+	       there is no safety for this method. }
+ 	select note_id
+	confirm query length == 1
+	hard delete note
+	return 0 if success, 1 is error
+
+ - display_note(note_id, directory_name)
+ 	select note_id
+	return note
+
+ - append_note(note_id, directory_name, note_contents)
+ 	(effectively identical to create note) 
+	//might delete or update
+	TODO: consider
+
+
+
+	
