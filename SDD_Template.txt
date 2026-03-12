@@ -22,13 +22,15 @@ Terms:
 N/A
 
 References:
+Software Requirements Document for an Alogirthm-powered Secure Notes App: SRD.pdf
+
 Secure Notes Application SRD / SRD_templates.txt   **** Placeholder for now: We should give the SRD a more appropriate naming convention. I can only see the SRD grade but cant see what our submission was titled ****
 
 2 Design Considerations:
 
-The design of the SUD is primarily shaped by its security and privacy requirements. Since the application handles personal notes, protecting user data is the most important consideration. All notes must remain encrypted when stored on the Host Computer.
+The design of the SUD is primarily shaped by its security and privacy requirements. Since the application handles personal notes, protecting user data is the most important consideration. All notes must remain encrypted when stored on the HC.
 
-Another key consideration is that the SUD operates entirely offline using a command-line interface. This means all functionality must run locally without relying on external servers, databases, or network connections. The design must therefore securely manage data persistence using local files while maintaining a clear separation between encrypted storage and runtime operations.
+Another key consideration is that the SUD operates entirely offline using a CLI. This means all functionality must run locally without relying on external servers, databases, or network connections. The design must therefore securely manage data persistence using local files while maintaining a clear separation between encrypted storage and runtime operations.
 
 Modularity is also a major focus. The system is divided into separate components for file handling, encryption, AI processing, and user interaction. This separation keeps responsibilities clear, reduces complexity, and makes the system easier to test and maintain.
 
@@ -36,7 +38,7 @@ Performance and reliability are additional considerations. Encryption, decryptio
 
 2.1 Assumptions and Dependencies:
 
-The SUD is designed to operate on a Host Computer with Python 3.10 or later installed. It assumes the user has access to a functioning command-line interface and can execute Python scripts. The system relies on the local file system to store encrypted note files and therefore requires read and write permissions within the project directory.
+The SUD is designed to operate on a HC with Python 3.10 or later installed. It assumes the user has access to a functioning CLI and can execute Python scripts. The system relies on the local file system to store encrypted note files and therefore requires read and write permissions within the project directory.
 
 The design assumes compatibility with common operating systems that support Python and standard file system operations, including Windows, macOS, and Linux. No operating system–specific features are required, and the SUD is intended to remain platform-independent.
 
@@ -46,13 +48,14 @@ The design also anticipates possible future enhancements, such as additional AI 
 
 2.2 Design Constraints:
 
-As currently specified in SRD_templates.txt ***UPDATE WITH ACTUAL DOCUMENT NAME ***, there are no constraints placed on the SUD's design and none are levied herein. That said, the design has been constructed such taht the potential upgrades mentioned in section 2.1 should be easily accomodated.
+As currently specified in SRD.pdf, there are no constraints placed on the SUD's design and none are levied herein. That said, the design has been constructed such taht the potential upgrades mentioned in section 2.1 should be easily accomodated.
 
 2.3 Goals and Guidelines:
 
 The SUD has been designed with modifiability, maintainability, security, and performance in mind (see Section 2.1 for potential changes). Consequently, sound software design principles have been emphasized, especially:
-    - Modularity and information hiding: The design separates concerns to enable independent modification and testing of encryption, note management, user interface, and AI processing              functionality.
+    - Modularity and information hiding: The design separates concerns to enable independent modification and testing of encryption, note management, user interface, and AI processing functionality.
     - Loose coupling between modules: Dependencies are minimized to allow changes without cascading effects throughout the system.
+    - Loose coupling within modules: Mmeber functions rely on parameters to pass data instead of global variables, ensuring variables and data exist only where they are needed and used.
     - High cohesion within modules: Each module has a single, well-defined responsibility.
     - Partitioning volatility: Components likely to change are isolated from stable components to accommodate future requirements with minimal impact.
     - Security focused design: The architecture enforces AES-256 encryption, PBKDF2 key derivation, and ensures plaintext content never persists outside application memory.
@@ -61,8 +64,9 @@ The SUD has been designed with modifiability, maintainability, security, and per
 
 The team first created the Software Requirements Document (SRD) to define the system’s functional and non-functional requirements. This Software Design Document (SDD) builds on those requirements by describing how the system will be structured and implemented.
 
-The team uses a modular design approach. Each major part of the system is developed as a separate component with a clear responsibility. For example, different modules handle file management, encryption and decryption, AI processing, and user interaction. This separation allows team members to work on different parts of the system while keeping the overall design organized and easier to maintain.
+In developing the SUD, the team employs a remote, iterative object-oriented approach coupled with modular design. Each major part of the system is developed as a separate component with a clear responsibility. For example, different modules handle file management, encryption and decryption, AI processing, and user interaction. This separation allows team members to work on different parts of the system remotely while keeping the overall design organized and easier to maintain.
 
+/* Note: Change Incremental to Test-Driven */
 The team also follows an incremental development process. We implement and test individual modules before integrating them into the full system. This approach helps us catch errors early and verify that each component works as intended before combining it with the rest of the system.
 
 3 High-Level Design (HLD):
@@ -77,7 +81,7 @@ The SUD accepts user actions through a menu-driven CLI, delegates security opera
         •	Change Note (Append) — the user selects a saved note to make changes to; the system decrypts, appends new content, re-encrypts, and saves.
         •	Summarize Note — the user selects a note; the system decrypts it, passes plaintext to the AI module, and displays the plaintext summary.
         •	Delete Note — the user selects a note for deletion; the system requests confirmation then removes the file permanently.
-        •	Save Note — an operation that follows the Create/Append note that writes the encrypted note to the local file system.
+        •	Save Note — a private operation that follows the Create/Append note that writes the encrypted note to the local file system.
 
     
 
