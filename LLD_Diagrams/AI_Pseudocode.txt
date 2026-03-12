@@ -1,4 +1,4 @@
-- summarize(note_text)
+-summarize(note_text): SDD_02_TT_01 :: SRD::TT_12
     if note_text is empty
         return error
 
@@ -6,7 +6,7 @@
     return summary
 
 
-- extract_keywords(note_text)
+-extract_keywords(note_text): SDD_02_TT_02 :: SRD::TT_13
     if note_text is empty
         return error
 
@@ -14,7 +14,7 @@
     return keywords
 
 
-- generate_summary(text)
+-generate_summary(text): SDD_02_TT_03 :: SRD::TT_12
     sentences = split_sentences(text)
 
     if number of sentences == 0
@@ -38,7 +38,7 @@
     return summary
 
 
-- get_top_keywords(text)
+-get_top_keywords(text): SDD_2_TT_04 :: SRD::TT_18
     tokens = preprocess_text(text)
 
     if number of tokens == 0
