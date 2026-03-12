@@ -2,6 +2,7 @@
 classDiagram
     class Menu {
         -string password
+        -get_password()
         -save(file)
         -generate_filename()
         -choose_file()
