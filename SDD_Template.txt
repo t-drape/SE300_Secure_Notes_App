@@ -19,7 +19,7 @@ TSC: Terminal Start Command
 PEC: Program Exit Command (^C)
 
 Terms:
-N/A
+    Name: Temporary Files, Definition: Files that are passed between functions, but are not saved persistently, either to the HC or the DB.
 
 References:
 Software Requirements Document for an Alogirthm-powered Secure Notes App: SRD.pdf
