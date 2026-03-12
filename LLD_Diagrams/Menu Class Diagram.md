@@ -1,6 +1,7 @@
 ```mermaid
 classDiagram
     class Menu {
+        -string password
         -save(file)
         -generate_filename()
         -choose_file()
