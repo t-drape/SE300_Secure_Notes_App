@@ -66,10 +66,12 @@ sequenceDiagram
             Menu->>Database: Delete note
             Database-->>Menu: Confirmation
 
-        else 6) Exit
-            User->>Menu: Select exit
-            Menu->>PEC: Exit program
-            PEC->>User: Terminate
+        else 6) Default
+            Menu->>User: Display error message
+            Menu->>Menu: Restart program
         end
     end
+    
+    User->>PEC: Ctrl+C
+    PEC->>User: Terminate
 ```
