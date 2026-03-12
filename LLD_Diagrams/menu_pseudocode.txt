@@ -1,3 +1,7 @@
+Any DB actions are performed by the DB component
+Any Encryption or Decryption actions are perfromed by the SecurityManager component
+
+
 -save(string file): SDD_TT_3_001 :: SRD::T_19
   file = filename,
   Encrypt file contents from writing window, (passing password)
