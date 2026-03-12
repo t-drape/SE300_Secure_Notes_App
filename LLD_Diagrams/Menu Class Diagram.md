@@ -12,8 +12,6 @@ classDiagram
         -summarize(file)
         -delete(file)
         -select()
-        -check_password()
-        -set_password()
         +get_password()
         +act(selected_action)
     }
