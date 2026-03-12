@@ -19,6 +19,8 @@ MENU -TJ
   b. Add public member get_password() that prompts the user for a password and saves it to the password variable. 
 2. Temporary Files
   a. Throughout the menu class, I used the syntax of passing and writing temporary files. These files exists nowhere in persistent memory. Noting the difference of definitions between John and I, I have since added a definition of temporary file to the document. This clarification ensures the SDD doesn't violate SRD::T_05 or SRD::T_50.
+3. Persistent Password in DB
+  a. After reviewing the concerns of John with regards to the Menu class and password, I added functions to the menu class to allow the user to create a persistent password that saves to the DB.
 
 Review Considerations:
   Add a persistent password field to the database. Upon the TSC, we can query the user input from get_password() against this value (encrypted version saved, so encrypt user input). If they match, allow the user to access the program. Otherwise, run the PEC.
