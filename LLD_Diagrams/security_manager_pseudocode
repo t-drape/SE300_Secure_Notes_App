@@ -16,7 +16,7 @@
   Print decryption error message to user,
   Return to caller
 
-+encrypt_note(plaintext, password): SDD_TT_4_005 :: SRD::T_15, T_28, T_46, T_47, T_49
++encrypt_note(plaintext, password): SDD_TT_4_005 :: SRD::T_15, T_28, T_35, T_46, T_47, T_49
   Call validate_password(password),
   If invalid,
     Call handle_encryption_error,
@@ -27,7 +27,7 @@
   Concatenate salt with encrypted data,
   Return concatenated ciphertext
 
-+decrypt_note(ciphertext, password): SDD_TT_4_006 :: SRD::T_16, T_28, T_46, T_50
++decrypt_note(ciphertext, password): SDD_TT_4_006 :: SRD::T_16, T_28, T_36, T_46, T_50
   Call validate_password(password),
   If invalid,
     Call handle_decryption_error,
