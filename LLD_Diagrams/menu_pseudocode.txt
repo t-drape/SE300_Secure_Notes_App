@@ -1,24 +1,16 @@
--get_password(): SDD_TT_3_001 :: SRD::T_28, SRD::T_31
-  Print message for user input,
-  If user input exists and matches requirements, (eight characters)
-    Save to password variable
-  Else,
-    Call get_password
-
-
--save(string file): SDD_TT_3_002 :: SRD::T_19
+-save(string file): SDD_TT_3_001 :: SRD::T_19
   file = filename,
   Encrypt file contents from writing window, (passing password)
   Save encrypted file content to DB under filename
 
 
--generate_filename(): SDD_TT_3_003 :: SRD::T_19
+-generate_filename(): SDD_TT_3_002 :: SRD::T_19
   Find current date,
   Map to appropriate filename, like 03_10_26 for March 10th, 2026
   Return filename
 
 
--choose_file(): SDD_TT_3_004 :: SRD::T_13, SRD::T_14, SRD::T_17
+-choose_file(): SDD_TT_3_003 :: SRD::T_13, SRD::T_14, SRD::T_17
   Print message for user input,
   If file exists,
     Return filename
@@ -26,7 +18,7 @@
     Return to start of program
 
 
--confirm_delete(): SDD_TT_3_005 :: SRD::T_20, SRD::T_43
+-confirm_delete(): SDD_TT_3_004 :: SRD::T_20, SRD::T_43
   Print message for user input,
   If user input = confirmation,
     Return true
@@ -34,7 +26,7 @@
     Return false
 
 
--new_note(): SDD_TT_3_006 :: SRD::T_11
+-new_note(): SDD_TT_3_005 :: SRD::T_11
   Generate filename,
   If no written content,
     Don't save file
@@ -42,14 +34,14 @@
     Save file under filename (call save function)
 
 
--display(string file): SDD_TT_3_007 :: SRD::T_14
+-display(string file): SDD_TT_3_006 :: SRD::T_14
   file = filename,
   Get file from DB,
   Decrypt file contents and save them to a temporary file, (passing password)
   Open temporary file in read-only mode
 
 
--append(string file): SDD_TT_3_008 :: SRD::T_13
+-append(string file): SDD_TT_3_007 :: SRD::T_13
   file = filename, 
   Get file of filename from DB,
   Write decrypted file contents to temporary file, (pass password)
@@ -57,7 +49,7 @@
   Save file (call the Save function)
 
 
--summarize(string file): SDD_TT_3_009 :: SRD::T_12
+-summarize(string file): SDD_TT_3_008 :: SRD::T_12
   file = filename,
   Get file of filename from DB,
   Decrypt file contents and write to a temporary file, (pass password)
@@ -66,17 +58,43 @@
   Display returned file contents
 
 
--delete(strIng file): SDD_TT_3_010 :: SRD::T_23
+-delete(strIng file): SDD_TT_3_009 :: SRD::T_23
   file = filename,
   Call DB delete function, passing filename parameter
 
 
--select(): SDD_TT_3_011 :: SRD::T_02, SRD::T_29
+-select(): SDD_TT_3_010 :: SRD::T_02, SRD::T_29
   Print message for user input for chosen action,
   Return input
 
 
-+act(): SDD_TT_3_012 :: SRD::T_02, SRD::T_21, SRD::T_22, SRD::T_30, SRD::T_39
+-check_password(): SDD_TT_3_011 :: SRD::T_47
+  password = encrypted password,
+  Get persistent encrypted password from DB,
+  If password equals the persistent password from DB,
+    Open Menu
+  Else, 
+    Print Invalid Access Error
+    PEC
+
+
+-set_password(): SDD_T_3_012
+  If persistent encrypted password does not exist in DB,
+    Call check_password,
+    Encrypt password,
+    Set DB persistent password to encrypted password
+
+
++get_password(): SDD_TT_3_013 :: SRD::T_28, SRD::T_31
+  Print message for user input,
+  If user input exists and matches requirements, (eight characters)
+    Save to password variable
+  Else,
+    Call get_password
+
+
+
++act(): SDD_TT_3_014 :: SRD::T_02, SRD::T_21, SRD::T_22, SRD::T_30, SRD::T_39, SRD::T_44
   Call select function,
   Map input to action,
     1) New Note:
