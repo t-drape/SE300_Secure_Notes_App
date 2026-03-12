@@ -78,7 +78,7 @@
     PEC
 
 
--set_password(): SDD_T_3_012
+-set_password(): SDD_T_3_012 :: SRD::T_47
   If persistent encrypted password does not exist in DB,
     Call check_password,
     Encrypt password,
