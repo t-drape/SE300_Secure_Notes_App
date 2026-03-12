@@ -1,0 +1,38 @@
+-derive_key_from_password(password, salt): SDD_TT_4_001
+    Use PBKDF2 to derive key from password and salt,
+    Return key
+
+-validate_password(password): SDD_TT_4_002 :: SRD::T_31
+    If password length < 8,
+        Return false
+    Else,
+        Return true
+
+-handle_encryption_error(error): SDD_TT_4_003 :: SRD::T_51
+    Print encryption error message to user,
+    Return to caller
+
+-handle_decryption_error(error): SDD_TT_4_004 :: SRD::T_52
+    Print decryption error message to user,
+    Return to caller
+
++encrypt_note(plaintext, password): SDD_TT_4_005 :: SRD::T_15, T_28, T_46, T_47, T_49
+    Call validate_password with password,
+    If invalid,
+        Call handle_encryption_error,
+        Return
+    Generate random salt,
+    Call derive_key_from_password with password and salt,
+    Encrypt plaintext using AES-256 with derived key,
+    Concatenate salt with encrypted data,
+    Return concatenated ciphertext
+
++decrypt_note(ciphertext, password): SDD_TT_4_006 :: SRD::T_16, T_28, T_46, T_50
+    Call validate_password with password,
+    If invalid,
+        Call handle_decryption_error,
+        Return
+    Extract salt from ciphertext,
+    Call derive_key_from_password with password and salt,
+    Decrypt ciphertext using AES-256 with derived key,
+    Return plaintext
