@@ -1,51 +1,33 @@
--summarize(note_text): SDD_02_TT_01 :: SRD::T_12
-    if note_text is empty
-        return error
+-summarize(note_text): SDD_TT_2_001 :: SRD::T_12
+  If note_text is empty,
+    Return error
+  summary = generate_summary(note_text),
+  Return summary
 
-    summary = summarizer.generate_summary(note_text)
-    return summary
+-extract_keywords(note_text): SDD_TT_2_002 :: SRD::T_18
+  If note_text is empty,
+    Return error
+  keywords = get_top_keywords(note_text),
+  Return keywords
 
+-generate_summary(text): SDD_TT_2_003 :: SRD::T_12
+  sentences = split_sentences(text),
+  If number of sentences == 0,
+    Return error
+  tokens = preprocess_text(text),
+  If number of tokens == 0,
+    Return error
+  word_frequencies = compute_word_frequencies(tokens),
+  sentence_scores = score_sentences(sentences),
+  top_sentences = select_top_sentences(sentence_scores),
+  Sort top_sentences by original sentence order,
+  summary = join top_sentences into one text,
+  Return summary
 
--extract_keywords(note_text): SDD_02_TT_02 :: SRD::T_13
-    if note_text is empty
-        return error
-
-    keywords = keyword_analyzer.get_top_keywords(note_text)
-    return keywords
-
-
--generate_summary(text): SDD_02_TT_03 :: SRD::T_12
-    sentences = split_sentences(text)
-
-    if number of sentences == 0
-        return error
-
-    tokens = preprocess_text(text)
-
-    if number of tokens == 0
-        return error
-
-    word_frequencies = compute_word_frequencies(tokens)
-
-    sentence_scores = score_sentences(sentences)
-
-    top_sentences = select_top_sentences(sentence_scores)
-
-    sort top_sentences by original sentence order
-
-    summary = join top_sentences into one text
-
-    return summary
-
-
--get_top_keywords(text): SDD_2_TT_04 :: SRD::T_18
-    tokens = preprocess_text(text)
-
-    if number of tokens == 0
-        return error
-
-    keyword_frequencies = count_word_frequencies(tokens)
-
-    keywords = select top keywords from keyword_frequencies
-
-    return keywords
+-get_top_keywords(text): SDD_TT_2_004 :: SRD::T_18
+  tokens = preprocess_text(text),
+  If number of tokens == 0,
+    Return error
+  keyword_frequencies = count_word_frequencies(tokens),
+  keywords = select top keywords from keyword_frequencies,
+  Return keywords
