@@ -1,4 +1,6 @@
- - create_directory(directory_name)
+SRD::T_41, SRD::T_27
+
+ - create_directory(directory_name): SDD_01_TT_01 :: SRD::T_11, SRD::T_19
 	create table (dname) with values
 	select table
 	if table_name matches directory_name,
@@ -6,16 +8,12 @@
 	else,
 		return 1
 
- - create_note(directory_name, note_info)
+ - create_note(directory_name, note_info): SDD_01_TT_02 :: SRD::T_11, SRD::T_19
 	find_current_date()
 	insert (note_info) into (directory_name)
 	return new_note (confirmation) or None (fail)
 
- - get_directories(None)
- 	select all tables from master sheet
-	return list of tables
-
- - delete_note(note_id, directory_name)
+ - delete_note(note_id, directory_name): SDD_01_TT_03 :: SRD::T_48, SRD::T_23
  	{note: this comes after menu asks for confirmation.
 	       there is no safety for this method. }
  	select note_id
@@ -23,19 +21,24 @@
 	hard delete note
 	return 0 if success, 1 is error
 
- - display_note(note_id, directory_name)
+ - display_note(note_id, directory_name): SDD_01_TT_04 :: SRD::T_14
  	select note_id
 	return note
 
- - update_note(note_id, directory_name, updated_contents)
+ - update_note(note_id, directory_name, updated_contents): SDD_01_TT_05 :: SRD::T_13
  	update (directory_name)
 	set contents = updated_contents
 	select * from (directory_name) where note_id
 	return ^^ for confirmation
 
-- get_note_id(directory_name, filename)
+- get_note_id(directory_name, filename): SDD_01_TT_06 :: SRD::T_14
 	select note_id from directory_name where =filename
 	return ^^
+
+ - get_directories(None): SDD_01_TT_07 :: SRD::T_14
+ 	select all tables from master sheet
+	return list of tables
+
 
 
 	
