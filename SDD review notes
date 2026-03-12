@@ -23,6 +23,12 @@ MENU -TJ
   a. After reviewing the concerns of John with regards to the Menu class and password, I added functions to the menu class to allow the user to create a persistent password that saves to the DB.
 4. Mapping of SRD Trace Tags to SDD functions
   a. After John noted that SRD::T_21 wasn't mapped to any functions, I included it in the trace tahs for SDD_TT_03_014, resolving this issue.
+5. Trace Tag Discrepancy
+  a. Upon reviewing the SRD, I noticed the trace tags T_12 and T_17 are the same. So, we mapped the functions only to T_12.
+
+
+Other Review Considerations:
+  If a user requests to summarize a note that has exceeded the maximum size, then the original note will be displayed.
 
 
 DATABASE – ROMAN
