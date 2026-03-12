@@ -1,0 +1,44 @@
+SE300 Secure Notes Design Review
+
+SECURITY MANAGER REVIEW UPDATES MADE- JOHN
+1.	Single App-Level Password
+  a.	Implemented one master password collected once when the app starts rather than asking for a password on every single note operation. User types it in at launch, it gets validated, and then it gets passed around to encrypt and decrypt as needed throughout the session. Satisfies T_28 and T_31 without being annoying or repetitive to use.
+2.	Plaintext Stays In Memory
+  a.	No temp files anywhere. After we decrypt a note the plaintext just lives as a variable, gets used (displayed, appended to, or summarized), and disappears when the function ends. This was a fix from the original Menu pseudocode which was writing to a temp file on disk. That violated T_05 and T_50 so we modified it.
+3.	SecurityManager Is Stateless
+  a.	Took out key, salt, and __init__ from SecurityManager. Key and salt are just local variables inside encrypt_note and decrypt_note now -- they pop into existence, do their thing, and are gone. No reason to store them on the object and honestly its more secure this way.
+4.	SecurityManager Public Interface
+  a.	Only encrypt_note() and decrypt_note() are now public. Everything else (derive_key_from_password, validate_password, handle_encryption_error, handle_decryption_error) is private. If you need to encrypt or decrypt something you call one of those two methods.
+
+MENU -TJ
+1. few things require attention here. Consider adding get_password() which runs at app launch. Password now gets passed as a parameter into save, display, append, and summarize. Temp files are gone, replaced with in-memory variables. save() now calls SecurityManager.encrypt_note() instead of doing crypto itself. display, append, and summarize all explicitly call SecurityManager.decrypt_note(). 
+
+
+DATABASE – ROMAN
+  a.	DbConnect class diagram shows create_note(contents) but the pseudocode has create_note(directory_name, note_info). Minor discrepancy.
+  b.	append_note still has a TODO in the pseudocode. Needs update before submission 
+  c.	no pseudocode for log_access() yet. Just make sure whatever it logs never includes plaintext or passwords.
+
+EVERYONE
+  a.	nobody has claimed T_24 and T_25 yet (notify user if note is too big for summarization or exceeds file size limit). Someone needs to own this.
+  b.	T_21 (input validation) isn't traced anywhere in the pseudocode even though choose_file() and confirm_delete() do handle some of it.
+
+TJ Updated Class Diagram if Changes are accepted. Updated Pseudocode is its own txt in the LLD folder
+classDiagram
+    class Menu {
+        -get_password()
+        -save(file, password)
+        -generate_filename()
+        -choose_file()
+        -confirm_delete()
+        -new_note(password)
+        -display(file, password)
+        -append(file, password)
+        -summarize(file, password)
+        -delete(file)
+        -select()
+        +act()
+    }
+
+
+
