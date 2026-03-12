@@ -33,24 +33,3 @@ DATABASE – ROMAN
 EVERYONE
   a.	nobody has claimed T_24 and T_25 yet (notify user if note is too big for summarization or exceeds file size limit). Someone needs to own this.
     TJ's opinion: I think this should be mapped to one of Afonso's functions. Maybe add another function called check_file_size? 
-  b.	T_21 (input validation) isn't traced anywhere in the pseudocode even though choose_file() and confirm_delete() do handle some of it. Fixed by TJ, now traced to menu.act().
-
-TJ Updated Class Diagram if Changes are accepted. Updated Pseudocode is its own txt in the LLD folder
-classDiagram
-    class Menu {
-        -get_password()
-        -save(file, password)
-        -generate_filename()
-        -choose_file()
-        -confirm_delete()
-        -new_note(password)
-        -display(file, password)
-        -append(file, password)
-        -summarize(file, password)
-        -delete(file)
-        -select()
-        +act()
-    }
-
-
-
