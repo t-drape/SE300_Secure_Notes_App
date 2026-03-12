@@ -8,7 +8,7 @@
 
 -save(string file): SDD_TT_3_002 :: SRD::T_19
   file = filename,
-  Encrypt file contents from writing window,
+  Encrypt file contents from writing window, (passing password)
   Save encrypted file content to DB under filename
 
 
@@ -45,14 +45,14 @@
 -display(string file): SDD_TT_3_007 :: SRD::T_14
   file = filename,
   Get file from DB,
-  Decrypt file contents and save them to a temporary file,
+  Decrypt file contents and save them to a temporary file, (passing password)
   Open temporary file in read-only mode
 
 
 -append(string file): SDD_TT_3_008 :: SRD::T_13
   file = filename, 
   Get file of filename from DB,
-  Save decrypted file contents to temporary file,
+  Write decrypted file contents to temporary file, (pass password)
   Open temporary file in append mode in writing window,
   Save file (call the Save function)
 
@@ -60,7 +60,7 @@
 -summarize(string file): SDD_TT_3_009 :: SRD::T_12
   file = filename,
   Get file of filename from DB,
-  Decrypt file contents and write to a temporary file,
+  Decrypt file contents and write to a temporary file, (pass password)
   Call the AI class summary function and pass the decrypted temporary file,
   Get return value from AI summary function,
   Display returned file contents
