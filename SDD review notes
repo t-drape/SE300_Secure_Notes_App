@@ -22,10 +22,6 @@ MENU -TJ
 3. Persistent Password in DB
   a. After reviewing the concerns of John with regards to the Menu class and password, I added functions to the menu class to allow the user to create a persistent password that saves to the DB.
 
-Review Considerations:
-  Add a persistent password field to the database. Upon the TSC, we can query the user input from get_password() against this value (encrypted version saved, so encrypt user input). If they match, allow the user to access the program. Otherwise, run the PEC.
-  
-
 
 DATABASE – ROMAN
   a.	DbConnect class diagram shows create_note(contents) but the pseudocode has create_note(directory_name, note_info). Minor discrepancy.
