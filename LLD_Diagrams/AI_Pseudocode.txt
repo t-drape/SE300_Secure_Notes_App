@@ -1,3 +1,51 @@
-summarize(note_text):
-  Receive decrypted note text,
-  
+- summarize(note_text)
+    if note_text is empty
+        return error
+
+    summary = summarizer.generate_summary(note_text)
+    return summary
+
+
+- extract_keywords(note_text)
+    if note_text is empty
+        return error
+
+    keywords = keyword_analyzer.get_top_keywords(note_text)
+    return keywords
+
+
+- generate_summary(text)
+    sentences = split_sentences(text)
+
+    if number of sentences == 0
+        return error
+
+    tokens = preprocess_text(text)
+
+    if number of tokens == 0
+        return error
+
+    word_frequencies = compute_word_frequencies(tokens)
+
+    sentence_scores = score_sentences(sentences)
+
+    top_sentences = select_top_sentences(sentence_scores)
+
+    sort top_sentences by original sentence order
+
+    summary = join top_sentences into one text
+
+    return summary
+
+
+- get_top_keywords(text)
+    tokens = preprocess_text(text)
+
+    if number of tokens == 0
+        return error
+
+    keyword_frequencies = count_word_frequencies(tokens)
+
+    keywords = select top ranked keywords
+
+    return keywords
