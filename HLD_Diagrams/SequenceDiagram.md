@@ -15,47 +15,61 @@ sequenceDiagram
         User->>Menu: select()
         Menu->>Menu: act()
         
-        alt open(file)
-            Menu->>Database: Retrieve encrypted note
-            Database-->>Menu: encrypted_data
-            Menu->>SecurityManager: decrypt_note()
-            SecurityManager-->>Menu: plaintext
-            Menu->>User: Display note
-            
-        else save(file)
+        alt 1) New Note
             User->>Menu: Provide note content
-            Menu->>SecurityManager: encrypt_note()
-            SecurityManager-->>Menu: encrypted_data
+            User->>Menu: Provide password
+            Menu->>SecurityManager: encrypt_note(plaintext, password)
+            SecurityManager-->>Menu: concatenated ciphertext
             Menu->>Database: Save encrypted note
             Database-->>Menu: Confirmation
-            
-        else append(file)
+
+        else 2) Display Note
+            Menu->>User: choose_file()
+            User->>Menu: filename
             Menu->>Database: Retrieve encrypted note
             Database-->>Menu: encrypted_data
-            Menu->>SecurityManager: decrypt_note()
+            User->>Menu: Provide password
+            Menu->>SecurityManager: decrypt_note(ciphertext, password)
             SecurityManager-->>Menu: plaintext
-            User->>Menu: Provide additional text
-            Menu->>SecurityManager: encrypt_note()
-            SecurityManager-->>Menu: encrypted_data
-            Menu->>Database: Save encrypted note
-            
-        else summarize(file)
+            Menu->>User: Display note
+
+        else 3) Change Note
+            Menu->>User: choose_file()
+            User->>Menu: filename
             Menu->>Database: Retrieve encrypted note
             Database-->>Menu: encrypted_data
-            Menu->>SecurityManager: decrypt_note()
+            User->>Menu: Provide password
+            Menu->>SecurityManager: decrypt_note(ciphertext, password)
+            SecurityManager-->>Menu: plaintext
+            User->>Menu: Provide additional content
+            Menu->>SecurityManager: encrypt_note(plaintext, password)
+            SecurityManager-->>Menu: concatenated ciphertext
+            Menu->>Database: Save encrypted note
+            Database-->>Menu: Confirmation
+
+        else 4) Summarize Note
+            Menu->>User: choose_file()
+            User->>Menu: filename
+            Menu->>Database: Retrieve encrypted note
+            Database-->>Menu: encrypted_data
+            User->>Menu: Provide password
+            Menu->>SecurityManager: decrypt_note(ciphertext, password)
             SecurityManager-->>Menu: plaintext
             Menu->>Menu: AI summarization
             Menu->>User: Display summary
-            
-        else delete(file)
-            Menu->>User: Confirm deletion
+
+        else 5) Delete Note
+            Menu->>User: choose_file()
+            User->>Menu: filename
+            Menu->>User: confirm_delete()
             User->>Menu: Confirm
             Menu->>Database: Delete note
             Database-->>Menu: Confirmation
+
+        else 6) Exit
+            User->>Menu: Select exit
+            Menu->>PEC: Exit program
+            PEC->>User: Terminate
         end
     end
-    
-    User->>Menu: Select exit
-    Menu->>PEC: Exit program
-    PEC->>User: Terminate
 ```
