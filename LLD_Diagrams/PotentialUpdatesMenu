@@ -1,0 +1,92 @@
+-get_password(): SDD_TT_3_012 :: SRD::T_28, T_31
+  Prompt user for password,
+  Call SecurityManager.validate_password(password),
+  If invalid,
+    Print error message,
+    Return to start
+  Else,
+    Return password
+
+-save(string file, string password): SDD_TT_3_001 :: SRD::T_15
+  file = filename,
+  Call SecurityManager.encrypt_note(plaintext, password),
+  Save encrypted file content to DB under filename
+
+-generate_filename(): SDD_TT_3_002 :: SRD::T_19
+  Find current date,
+  Map to appropriate filename, like 03_10_26 for March 10th, 2026
+  Return filename
+
+-choose_file(): SDD_TT_3_003
+  Print message for user input,
+  If file exists,
+    Return filename
+  Else,
+    Return to start of program
+
+-confirm_delete(): SDD_TT_3_004 :: SRD::T_20
+  Print message for user input,
+  If user input = confirmation,
+    Return true
+  Else,
+    Return false
+
+-new_note(string password): SDD_TT_3_005 :: SRD::T_11
+  Generate filename,
+  If no written content,
+    Don't save file
+  Else,
+    Call save(filename, password)
+
+-display(string file, string password): SDD_TT_3_006 :: SRD::T_14, T_16
+  file = filename,
+  Get file from DB,
+  Call SecurityManager.decrypt_note(ciphertext, password),
+  Display plaintext in memory
+
+-append(string file, string password): SDD_TT_3_007 :: SRD::T_13, T_16
+  file = filename,
+  Get file of filename from DB,
+  Call SecurityManager.decrypt_note(ciphertext, password),
+  Hold plaintext in memory,
+  Open plaintext in append mode in writing window,
+  Call save(filename, password)
+
+-summarize(string file, string password): SDD_TT_3_008 :: SRD::T_12, T_16
+  file = filename,
+  Get file of filename from DB,
+  Call SecurityManager.decrypt_note(ciphertext, password),
+  Hold plaintext in memory,
+  Call the AI class summary function(plaintext),
+  Get return value from AI summary function,
+  Display returned file contents
+
+-delete(string file): SDD_TT_3_009 :: SRD::T_23
+  file = filename,
+  Call DB delete function(filename)
+
+-select(): SDD_TT_3_010 :: SRD::T_02
+  Print message for user input for chosen action,
+  Return input
+
++act(): SDD_TT_3_011 :: SRD::T_02, T_03, T_44, T_45
+  Call get_password(),
+  Call select(),
+  Map input to action,
+    1) New Note:
+        Call new_note(password)
+    2) Display Note:
+        Call choose_file(),
+        Call display(file, password)
+    3) Change Note:
+        Call choose_file(),
+        Call append(file, password)
+    4) Summarize Note:
+        Call choose_file(),
+        Call summarize(file, password)
+    5) Delete Note:
+        Call choose_file(),
+        Call delete(file)
+    6) Default:
+        Display error message,
+        Restart program
