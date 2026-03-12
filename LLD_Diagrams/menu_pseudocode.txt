@@ -2,10 +2,11 @@ Any DB actions are performed by the DB component
 Any Encryption or Decryption actions are perfromed by the SecurityManager component
 
 
--save(string file): SDD_TT_3_001 :: SRD::T_19, SRD::T_53
+-save(string file): SDD_TT_3_001 :: SRD::T_06, SRD::T_19, SRD::T_53
   file = filename,
-  Encrypt file contents from writing window, (passing password)
-  Save encrypted file content to DB under filename
+  If file content exists,
+    Encrypt file contents from writing window, (passing password)
+    Save encrypted file content to DB under filename
 
 
 -generate_filename(): SDD_TT_3_002 :: SRD::T_19
@@ -38,7 +39,7 @@ Any Encryption or Decryption actions are perfromed by the SecurityManager compon
     Save file under filename (call save function)
 
 
--display(string file): SDD_TT_3_006 :: SRD::T_14
+-display(string file): SDD_TT_3_006 :: SRD::T_14, SRD::T_54
   file = filename,
   Get file from DB,
   Decrypt file contents and save them to a temporary file, (passing password)
@@ -67,7 +68,7 @@ Any Encryption or Decryption actions are perfromed by the SecurityManager compon
   Call DB delete function, passing filename parameter
 
 
--select(): SDD_TT_3_010 :: SRD::T_02, SRD::T_29
+-select(): SDD_TT_3_010 :: SRD::T_02, SRD::T_04, SRD::T_29, SRD::T_39
   Print message for user input for chosen action,
   Return input
 
@@ -80,7 +81,7 @@ Any Encryption or Decryption actions are perfromed by the SecurityManager compon
     Call get_password
 
 
-+act(): SDD_TT_3_014 :: SRD::T_02, SRD::T_21, SRD::T_22, SRD::T_30, SRD::T_39, SRD::T_44
++act(): SDD_TT_3_014 :: SRD::T_02, SRD::T_03, SRD::T_04, SRD::T_11, SRD::T_12, SRD::T_13, SRD::T_14, SRD::T_21, SRD::T_22, SRD::T_30, SRD::T_44, SRD::T_45
   Call select function,
   Map input to action,
     1) New Note:
