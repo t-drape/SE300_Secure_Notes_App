@@ -2,7 +2,6 @@
 classDiagram
     class Menu {
         -string password
-        -get_password()
         -save(file)
         -generate_filename()
         -choose_file()
@@ -13,6 +12,9 @@ classDiagram
         -summarize(file)
         -delete(file)
         -select()
+        -check_password()
+        -set_password()
+        +get_password()
         +act(selected_action)
     }
 ```
