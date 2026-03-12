@@ -72,21 +72,6 @@ Any Encryption or Decryption actions are perfromed by the SecurityManager compon
   Return input
 
 
--check_password(): SDD_TT_3_011 :: SRD::T_47
-  get_password,
-  If password validated by SecurityManager,
-    Open Menu
-  Else,
-    PEC
-
-
--set_password(): SDD_T_3_012 :: SRD::T_47
-  If persistent encrypted password does not exist in DB,
-    Call check_password,
-    Encrypt password,
-    Set DB persistent password to encrypted password
-
-
 +get_password(): SDD_TT_3_013 :: SRD::T_28, SRD::T_31
   Print message for user input,
   If user input exists and matches requirements, (eight characters)
