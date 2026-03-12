@@ -31,3 +31,10 @@
   keyword_frequencies = count_word_frequencies(tokens),
   keywords = select top keywords from keyword_frequencies,
   Return keywords
+
+-check_file_size(text): SDD_TT_2_005 :: SRD::T_24
+  if sizeof(text) > MAX_SIZE,
+  	print("File exceeded maximum size")
+	Return 0
+  else,
+  	Return 1
