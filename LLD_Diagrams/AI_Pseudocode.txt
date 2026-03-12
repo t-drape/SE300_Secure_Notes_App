@@ -1,0 +1,3 @@
+summarize(note_text):
+  Receive decrypted note text,
+  
