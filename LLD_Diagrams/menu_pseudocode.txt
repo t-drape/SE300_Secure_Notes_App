@@ -1,4 +1,4 @@
--save(string file): SDD_TT_3_001
+-save(string file): SDD_TT_3_001 :: SRD::T_19
   file = filename,
   Encrypt file contents from writing window,
   Save encrypted file content to DB under filename
@@ -10,7 +10,7 @@
   Return filename
 
 
--choose_file(): SDD_TT_3_003
+-choose_file(): SDD_TT_3_003 :: SRD::T_13, SRD::T_14, SRD::T_17
   Print message for user input,
   If file exists,
     Return filename
@@ -18,7 +18,7 @@
     Return to start of program
 
 
--confirm_delete(): SDD_TT_3_004 :: SRD::T_20
+-confirm_delete(): SDD_TT_3_004 :: SRD::T_20, SRD::T_43
   Print message for user input,
   If user input = confirmation,
     Return true
@@ -68,7 +68,7 @@
   Return input
 
 
-+act(): SDD_TT_3_011 :: SRD::T_02
++act(): SDD_TT_3_011 :: SRD::T_02, SRD::T_21, SRD::T_22, SRD::T_39
   Call select function,
   Map input to action,
     1) New Note:
@@ -87,6 +87,7 @@
         Pass file to delete function
     6) Default:
         Restart program
+  Print Action Type
       
     
     
