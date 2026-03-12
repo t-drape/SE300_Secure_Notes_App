@@ -73,12 +73,10 @@ Any Encryption or Decryption actions are perfromed by the SecurityManager compon
 
 
 -check_password(): SDD_TT_3_011 :: SRD::T_47
-  password = encrypted password,
-  Get persistent encrypted password from DB,
-  If password equals the persistent password from DB,
+  get_password,
+  If password validated by SecurityManager,
     Open Menu
-  Else, 
-    Print Invalid Access Error
+  Else,
     PEC
 
 
