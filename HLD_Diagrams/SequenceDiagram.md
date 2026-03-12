@@ -9,6 +9,10 @@ sequenceDiagram
     
     User->>TSC: Run application
     TSC->>Menu: Launch menu
+    Menu->>User: Prompt for password
+    User->>Menu: Provide password
+    Menu->>SecurityManager: validate_password(password)
+    SecurityManager-->>Menu: valid/invalid
     
     loop Until user exits
         Menu->>User: Display action menu
@@ -17,7 +21,6 @@ sequenceDiagram
         
         alt 1) New Note
             User->>Menu: Provide note content
-            User->>Menu: Provide password
             Menu->>SecurityManager: encrypt_note(plaintext, password)
             SecurityManager-->>Menu: concatenated ciphertext
             Menu->>Database: Save encrypted note
@@ -28,7 +31,6 @@ sequenceDiagram
             User->>Menu: filename
             Menu->>Database: Retrieve encrypted note
             Database-->>Menu: encrypted_data
-            User->>Menu: Provide password
             Menu->>SecurityManager: decrypt_note(ciphertext, password)
             SecurityManager-->>Menu: plaintext
             Menu->>User: Display note
@@ -38,7 +40,6 @@ sequenceDiagram
             User->>Menu: filename
             Menu->>Database: Retrieve encrypted note
             Database-->>Menu: encrypted_data
-            User->>Menu: Provide password
             Menu->>SecurityManager: decrypt_note(ciphertext, password)
             SecurityManager-->>Menu: plaintext
             User->>Menu: Provide additional content
@@ -52,7 +53,6 @@ sequenceDiagram
             User->>Menu: filename
             Menu->>Database: Retrieve encrypted note
             Database-->>Menu: encrypted_data
-            User->>Menu: Provide password
             Menu->>SecurityManager: decrypt_note(ciphertext, password)
             SecurityManager-->>Menu: plaintext
             Menu->>Menu: AI summarization
