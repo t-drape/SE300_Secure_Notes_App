@@ -46,6 +46,6 @@
 
     keyword_frequencies = count_word_frequencies(tokens)
 
-    keywords = select top ranked keywords
+    keywords = select top keywords from keyword_frequencies
 
     return keywords
