@@ -1,1 +1,14 @@
-[![](https://mermaid.ink/img/pako:eNp1UtuOgjAQ_RUyT25EAwUD9FVf9wc2JKS2s9gILZmWZF3jv29l1WyUbZp0pufMmUt7BmkVAgfZCed2WrQk-tpEYe32W2sMSh_xaCV_TW3NHDiSs_QE8Gip9o0RPb4Aq862jZASnVu8vaIOjWqM9TgDLiWh8NgoTcG3dFoEa8ryP3eSCg14NN7N0Fr0Dz2NcyUtFXZ4V9JqhiCG4VH1LEFpN3Ti9MSAGFrSCrinEWPokXpxdeF8xWvwBwzzAx5MJehYQ20uIWYQ5sPa_h5GdmwPwD9F54I3Dip0fXvKxy2F8pC2djQeOGMpm1SAn-ELeFom6yQvs6yoKlaGXcRwAl5s1lVW5IwlLEvzIq8uMXxPeZN1WWySPyuNAZUOA3y_fafrcfkBsrbBUA?type=png)](https://mermaid.live/edit#pako:eNp1UtuOgjAQ_RUyT25EAwUD9FVf9wc2JKS2s9gILZmWZF3jv29l1WyUbZp0pufMmUt7BmkVAgfZCed2WrQk-tpEYe32W2sMSh_xaCV_TW3NHDiSs_QE8Gip9o0RPb4Aq862jZASnVu8vaIOjWqM9TgDLiWh8NgoTcG3dFoEa8ryP3eSCg14NN7N0Fr0Dz2NcyUtFXZ4V9JqhiCG4VH1LEFpN3Ti9MSAGFrSCrinEWPokXpxdeF8xWvwBwzzAx5MJehYQ20uIWYQ5sPa_h5GdmwPwD9F54I3Dip0fXvKxy2F8pC2djQeOGMpm1SAn-ELeFom6yQvs6yoKlaGXcRwAl5s1lVW5IwlLEvzIq8uMXxPeZN1WWySPyuNAZUOA3y_fafrcfkBsrbBUA)
+classDiagram
+    class DbConnect {
+        -connection
+        -cursor
+        +db_name
+        -log_access()
+        -send_note()
+        +create_directory(dir_name)
+        +create_note(contents)
+        +get_directories()
+        +delete_note(id)
+        +append_note(id)
+        +display_note(id)
+    }
