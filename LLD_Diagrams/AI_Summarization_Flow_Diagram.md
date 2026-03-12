@@ -19,6 +19,7 @@ class Summarizer {
     + score_sentences(sentences)
     + select_top_sentences(sentence_scores)
     + generate_summary(text)
+    + check_file_size(text)
 }
 
 class KeywordAnalyzer {
@@ -28,6 +29,7 @@ class KeywordAnalyzer {
     + count_word_frequencies(tokens)
     + get_top_keywords(text)
 }
+
 
 AIProcessor --> Summarizer
 AIProcessor --> KeywordAnalyzer
