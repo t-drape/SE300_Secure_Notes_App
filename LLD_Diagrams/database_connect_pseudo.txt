@@ -27,11 +27,15 @@
  	select note_id
 	return note
 
- - append_note(note_id, directory_name, note_contents)
- 	(effectively identical to create note) 
-	//might delete or update
-	TODO: consider
+ - update_note(note_id, directory_name, updated_contents)
+ 	update (directory_name)
+	set contents = updated_contents
+	select * from (directory_name) where note_id
+	return ^^ for confirmation
 
+- get_note_id(directory_name, filename)
+	select note_id from directory_name where =filename
+	return ^^
 
 
 	
