@@ -14,7 +14,7 @@ Any Encryption or Decryption actions are perfromed by the SecurityManager compon
   Return filename
 
 
--choose_file(): SDD_TT_3_003 :: SRD::T_13, SRD::T_14, SRD::T_17
+-choose_file(): SDD_TT_3_003 :: SRD::T_12, SRD::T_13, SRD::T_14
   Print message for user input,
   If file exists,
     Return filename
