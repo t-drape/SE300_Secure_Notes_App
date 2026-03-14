@@ -7,7 +7,7 @@ class DbConnect {
     -cursor
     +db_name
     +create_directory(dir_name)
-    +create_note(contents)
+    +create_note(directory_name, note_info)
     +get_directories()
     +delete_note(id)
     +update_note(id, contents)
