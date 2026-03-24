@@ -24,6 +24,7 @@ class Menu():
         if (answer == "y"):
             confirmation = True
         return confirmation
+    
     """
     Test Cases for confirm_delete():
         Does it work with uppercase y (Y)?
@@ -48,7 +49,22 @@ class Menu():
         pass
 
     def select():
-        pass
+        answer = input("""
+What action would you like to perform?
+(Input the number of the selected action)
+    1. Create Note
+    2. Display Note
+    3. Change Note
+    4. Summarize Note
+    5. Delete Note
+                       """)
+        try:
+            answer = int(answer)
+        except ValueError:
+            print("""
+                  Invalid Input. 
+                  Aborting action and returning to Menu.
+                  """)
 
     def get_password():
         return 0
@@ -57,12 +73,24 @@ class Menu():
         pass
 
 
-def confirm_delete():
-    confirmation = False
-    answer = input("Are you sure? This action cannot be reversed. [y for yes]\nAnswer: ").lower()
-    if (answer == "y"):
-        confirmation = True
-    return confirmation
+def select():
+    answer = input("""
+What action would you like to perform?
+(Input the number of the selected action)
+    1. Create Note
+    2. Display Note
+    3. Change Note
+    4. Summarize Note
+    5. Delete Note
+Answer: """)
+    try:
+        answer = int(answer)
+        return answer
+    except ValueError:
+        print("""
+Invalid Input. 
+Aborting action and returning to Menu.""")
+    return -1
 
-c = confirm_delete()
+c = select()
 print(c)
