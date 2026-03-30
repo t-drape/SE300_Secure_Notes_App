@@ -32,6 +32,9 @@ class Menu():
         # Does it create an altered string for the filename?
 
     def choose_file(self):
+        """Allows a user to select the file they wish to perform an action on
+        Reference: https://builtin.com/data-science/python-list-files-in-directory"""
+        
         files = [item for item in os.listdir() if os.path.isfile(item)]
         print(files)
         chosen_file = input("What file would you like to perform this action on?: ")
