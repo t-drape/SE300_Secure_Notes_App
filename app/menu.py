@@ -1,7 +1,7 @@
 import datetime
 import subprocess
 import platform
-import sys
+import os
 
 print("Welcome to the Secure Notes Application")
 
@@ -32,8 +32,20 @@ class Menu():
         # Does it create an altered string for the filename?
 
     def choose_file(self):
-        pass
-        # print("What file would you like to perform this action on?")
+        files = [item for item in os.listdir() if os.path.isfile(item)]
+        print(files)
+        chosen_file = input("What file would you like to perform this action on?: ")
+        if chosen_file in files:
+            return chosen_file
+        else:
+            print("I'm sorry, that file doesn't exist. Aborting action, returning to menu.")
+            file = self.choose_file()
+            print(file)
+
+        # Test cases for choose_file:
+            # Disallows invalid files?
+            # Correctly returns valid files?
+
 
     def confirm_delete(self, file):
         """Ensure user confirms desired deletion"""
@@ -152,5 +164,5 @@ class Menu():
         # Does the index generate a filename if None is specified
 
 m = Menu()
-m.act(3, "March_26_2026_01_04_33_PM.txt")
+m.choose_file()
 # m.act(4)
