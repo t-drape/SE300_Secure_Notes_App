@@ -5,7 +5,12 @@ import os
 
 print("Welcome to the Secure Notes Application")
 
-
+class System():
+    """Holds all class objects"""
+    def __init__(self):
+        m = Menu()
+        # ai = AIProcessor()
+        # db = Database()
 
 class Menu():
     """This class implements the requirements defined in the SRD and the features defined in the SDD for the Menu Class"""
@@ -107,6 +112,9 @@ class Menu():
         # Save changes to the file
 
     def summarize(self, file):
+        with open(file, "r") as f:
+            content = f.read()
+        System.ai.summarize(content)
         pass
 
     def delete(self, file):
@@ -167,5 +175,5 @@ class Menu():
         # Does the index generate a filename if None is specified
 
 m = Menu()
-m.choose_file()
+m.act(3,"March_31_2026_12_47_49_PM.txt")
 # m.act(4)
