@@ -12,7 +12,7 @@ class SecurityManager:
     _SALT_SIZE = 16
     _NONCE_SIZE = 12
     _KEY_SIZE = 32  
-    _PBKDF2_ITERATIONS = 600_000
+    _PBKDF2_ITERATIONS = 600000
     _MIN_PASSWORD_LENGTH = 8
     
     @staticmethod
