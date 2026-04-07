@@ -2,6 +2,7 @@ import datetime
 import subprocess
 import platform
 import os
+from security_manager import SecurityManager
 
 print("Welcome to the Secure Notes Application")
 
@@ -15,11 +16,31 @@ class System():
 class Menu():
     """This class implements the requirements defined in the SRD and the features defined in the SDD for the Menu Class"""
     def __init__(self):
-        # password = self.get_password()
+        self.__password = self.get_password()
         # This line allows me to make a function call directly by using the returned user choice as an index (allows passing the file still)
         self.possible_actions = [self.new_note, self.display, self.append, self.summarize, self.delete]
 
-    
+    # Helper methods for encryption/decryption
+    def __get_plaintext(self, file):
+        # get encrypted bytes from DB and decrypt it
+        # encrypted_data = System.db.get_note(file)
+        with open(file, "rb") as f:
+            encrypted_data = f.read()
+        plaintext = SecurityManager.decrypt_note(encrypted_data, self.__password)
+        if plaintext is None:
+            print("Error: could not decrypt note.")
+        return plaintext
+
+    def __encrypt_and_save(self, file, plaintext, note_id=None):
+        # encrypt and save to DB, note_id=None means new note
+        encrypted = SecurityManager.encrypt_note(plaintext, self.__password)
+        if encrypted is None:
+            print("Error: could not encrypt note.")
+            return
+        # System.db.save_note(file, encrypted)
+        with open(file, "wb") as f:
+            f.write(encrypted)
+        
     def save(self, file):
         pass
 
