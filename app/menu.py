@@ -3,11 +3,8 @@ import subprocess
 import platform
 import os
 
-import tempfile
-import shutil
-import shlex
-
 from security_manager import SecurityManager
+from db import DbConnect, _DbConnectError
 # NOTE: NEED TO SWITCH TO USING TEMPFILES!
 
 print("Welcome to the Secure Notes Application")
@@ -15,14 +12,16 @@ print("Welcome to the Secure Notes Application")
 class System():
     """Holds all class objects"""
     def __init__(self):
-        menu = Menu()
-        security = SecurityManager()
+        self.menu = Menu()
+        self.security = SecurityManager()
         # ai = AIProcessor()
-        # db = Database()
+        self.db = DbConnect()
 
 class Menu():
     """This class implements the requirements defined in the SRD and the features defined in the SDD for the Menu Class"""
     def __init__(self):
+        self.security = SecurityManager()
+        self.db = DbConnect()
         self.__password = self.get_password()
         # This line allows me to make a function call directly by using the returned user choice as an index (allows passing the file still)
         self.possible_actions = [self.new_note, self.display, self.append, self.summarize, self.delete]
@@ -45,9 +44,11 @@ class Menu():
             print("Error: could not encrypt note.")
             return
         
+        self.db.create_note("notes", file, encrypted)
+        
         # System.db.save_note(file, encrypted)
-        with open(file, "wb") as f:
-            f.write(encrypted)
+        # with open(file, "wb") as f:
+        #     f.write(encrypted)
         
     def save(self, file):
         pass
@@ -209,6 +210,7 @@ class Menu():
         # Does the index generate a filename if None is specified
 
 m = Menu()
-m.display("dummy.txt")
+m.db.create_directory("Notes")
+m.new_note("dummy.txt")
 # m.open_editor()
 # m.act(4)
