@@ -2,14 +2,21 @@ import datetime
 import subprocess
 import platform
 import os
+
+import tempfile
+import shutil
+import shlex
+
 from security_manager import SecurityManager
+# NOTE: NEED TO SWITCH TO USING TEMPFILES!
 
 print("Welcome to the Secure Notes Application")
 
 class System():
     """Holds all class objects"""
     def __init__(self):
-        m = Menu()
+        menu = Menu()
+        security = SecurityManager()
         # ai = AIProcessor()
         # db = Database()
 
@@ -21,7 +28,7 @@ class Menu():
         self.possible_actions = [self.new_note, self.display, self.append, self.summarize, self.delete]
 
     # Helper methods for encryption/decryption
-    def __get_plaintext(self, file):
+    def get_plaintext(self, file):
         # get encrypted bytes from DB and decrypt it
         # encrypted_data = System.db.get_note(file)
         with open(file, "rb") as f:
@@ -31,12 +38,13 @@ class Menu():
             print("Error: could not decrypt note.")
         return plaintext
 
-    def __encrypt_and_save(self, file, plaintext, note_id=None):
+    def encrypt_and_save(self, plaintext, file, note_id=None):
         # encrypt and save to DB, note_id=None means new note
         encrypted = SecurityManager.encrypt_note(plaintext, self.__password)
         if encrypted is None:
             print("Error: could not encrypt note.")
             return
+        
         # System.db.save_note(file, encrypted)
         with open(file, "wb") as f:
             f.write(encrypted)
@@ -91,52 +99,57 @@ class Menu():
             # Does it return boolean values?
 
     def new_note(self, file):
-        with open(file, "w") as f:
-            # Creates a file header
-            # heading = f"Title: {file}"
-            # f.write(heading)
-            pass
-            # Creates the file without a header
-        self.open_and_wait(file)
+        note = input(f"{file}: ")
+        self.encrypt_and_save(note, file)
+
+        # self.encrypt_and_save(file)
+
 
         # Still need to save the file to the DB
         # Ensure the file is not empty
         # Save file
-            
 
-    def open_and_wait(self, filepath):
-        """
-        Opens a file with its default application and waits for the application to close.
-        Code by Google AI, (Google AI Overview, 2026)
-        """
-        if platform.system() == "Windows":
-            # 'start' command on Windows opens the file using its associated application
-            # and requires shell=True to work correctly.
-            subprocess.run(['start', filepath], shell=True, check=True)
-        elif platform.system() == "Darwin": # macOS
-            subprocess.run(['open', filepath], check=True)
-        else: # Linux/other POSIX
-            # xdg-open is a common utility for this purpose
-            subprocess.run(['xdg-open', filepath], check=True)
+
+
+    # # def __open_and_wait(self, filepath):
+    #     """
+    #     Opens a file with its default application and waits for the application to close.
+    #     Code by Google AI, (Google AI Overview, 2026)
+    #     """
+    #     if platform.system() == "Windows":
+    #         # 'start' command on Windows opens the file using its associated application
+    #         # and requires shell=True to work correctly.
+    #         subprocess.run(['start', filepath], shell=True, check=True)
+    #     elif platform.system() == "Darwin": # macOS
+    #         subprocess.run(['open', filepath], check=True)
+    #     else: # Linux/other POSIX
+    #         # xdg-open is a common utility for this purpose
+    #         subprocess.run(['xdg-open', filepath], check=True)
+    #     print("Finished")
 
     def display(self, file):
         """
         Sources: Google AI overview of reading all lines from a file
         """
-        with open(file, "r", encoding="utf-8") as f:
-            for line in f:
-                print(line)
+        decrypted_file_contents = self.get_plaintext(file)
+        print(decrypted_file_contents)
+        # with open(file, "r", encoding="utf-8") as f:
+        #     for line in f:
+        #         print(line)
 
     def append(self, file):
-        self.open_and_wait(file)
+        pass
+        # with open(f)
+        # self.open_and_wait(file)
         # Ensure the file is not empty
         # Save changes to the file
 
     def summarize(self, file):
-        with open(file, "r") as f:
-            content = f.read()
-        System.ai.summarize(content)
         pass
+        # with open(file, "r") as f:
+        #     content = f.read()
+        # System.ai.summarize(content)
+        # pass
 
     def delete(self, file):
         self.confirm_delete(file)
@@ -196,5 +209,6 @@ class Menu():
         # Does the index generate a filename if None is specified
 
 m = Menu()
-m.act(3,"March_31_2026_12_47_49_PM.txt")
+m.display("dummy.txt")
+# m.open_editor()
 # m.act(4)
