@@ -41,7 +41,10 @@ class Menu():
         return plaintext
 
     def encrypt_and_save(self, plaintext, file):
-
+        """
+        Receives the plaintext string of the note's content and the filename, encrypts the string, and then
+        calls the appropriate DB function to save the note persistently.
+        """
         # encrypt and save to DB
         encrypted = self.security.encrypt_note(plaintext, self.__password)
         if encrypted is None:
@@ -51,10 +54,7 @@ class Menu():
         self.db.create_note("notes", file, encrypted)
         
     # NOTE: Overlapping functionality with encrypt_and_save
-    # NOTE: Move saving functionality into save, move saving out of encrypt_and_save (SOLID Principles)
-    def save(self, file):
-
-        pass
+    # FIX: Having two functions does nothing to improve readability. This code is fine. 
 
     def generate_filename(self):
         """Generate the filename for a new note based on the current date and current time (down to the second)"""
@@ -104,7 +104,9 @@ class Menu():
             # Does it return boolean values?
 
     def new_note(self, file):
-
+        """
+        Allow a user to create a new note using the terminal
+        """
         note = input(f"{file}: ")
         self.encrypt_and_save(note, file)
 
@@ -123,7 +125,11 @@ class Menu():
         print(decrypted)
 
     def append(self, file):
-        pass
+        encrypted_content = self.get_encrypted_note_content_from_DB(file)
+        decrypted_content = self.get_plaintext(encrypted_content)
+        new_content = input(f"{file}: {decrypted_content}\nYou cannot overwrite this data. However, you can add to it. A space is already added:\n")
+        appended_string = " " + decrypted_content + new_content
+        self.db.update_note("notes", file, self.security.encrypt_note(appended_string, self.__password))
         # with open(f)
         # self.open_and_wait(file)
         # Ensure the file is not empty
@@ -221,4 +227,7 @@ class Menu():
 
 m = Menu()
 m.db.create_directory("Notes")
+# m.new_note("summarize_link_test.txt")
+m.display_note("summarize_link_test.txt")
+m.append("summarize_link_test.txt")
 m.summarize("summarize_link_test.txt")
