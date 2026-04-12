@@ -27,28 +27,24 @@ class Menu():
         self.possible_actions = [self.new_note, self.display, self.append, self.summarize, self.delete]
 
     # Helper methods for encryption/decryption
-    def get_plaintext(self, file):
+    def get_plaintext(self, encrypted_content : str):
         # get encrypted bytes from DB and decrypt it
         # encrypted_data = System.db.get_note(file)
-        with open(file, "rb") as f:
-            encrypted_data = f.read()
-        plaintext = SecurityManager.decrypt_note(encrypted_data, self.__password)
+        # with open(file, "rb") as f:
+        #     encrypted_data = f.read()
+        plaintext = self.security.decrypt_note(encrypted_content, self.__password)
         if plaintext is None:
             print("Error: could not decrypt note.")
         return plaintext
 
-    def encrypt_and_save(self, plaintext, file, note_id=None):
-        # encrypt and save to DB, note_id=None means new note
-        encrypted = SecurityManager.encrypt_note(plaintext, self.__password)
+    def encrypt_and_save(self, plaintext, file):
+        # encrypt and save to DB
+        encrypted = self.security.encrypt_note(plaintext, self.__password)
         if encrypted is None:
             print("Error: could not encrypt note.")
             return
         
         self.db.create_note("notes", file, encrypted)
-        
-        # System.db.save_note(file, encrypted)
-        # with open(file, "wb") as f:
-        #     f.write(encrypted)
         
     def save(self, file):
         pass
@@ -71,6 +67,7 @@ class Menu():
         Reference: https://builtin.com/data-science/python-list-files-in-directory"""
         
         files = [item for item in os.listdir() if os.path.isfile(item)]
+        # Change to showing all files on the DB
         print(files)
         chosen_file = input("What file would you like to perform this action on?: ")
         if chosen_file in files:
@@ -132,7 +129,8 @@ class Menu():
         """
         Sources: Google AI overview of reading all lines from a file
         """
-        decrypted_file_contents = self.get_plaintext(file)
+        encrypted_content = self.db.display_note("Notes", file)
+        decrypted_file_contents = self.get_plaintext(encrypted_content)
         print(decrypted_file_contents)
         # with open(file, "r", encoding="utf-8") as f:
         #     for line in f:
@@ -153,8 +151,10 @@ class Menu():
         # pass
 
     def delete(self, file):
-        self.confirm_delete(file)
-        print("Hello There")
+        if self.confirm_delete(file):
+            self.db.delete_note("Notes",file)
+        else:
+            print("Aborting Deletion.")
     
     # Test cases for delete():
         # Does the function call confirm_delete before calling DB.delete()?
@@ -211,6 +211,7 @@ class Menu():
 
 m = Menu()
 m.db.create_directory("Notes")
-m.new_note("dummy.txt")
+
+
 # m.open_editor()
 # m.act(4)
