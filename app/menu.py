@@ -9,8 +9,6 @@ from summarizer import Summarizer
 # NOTE: NEED TO SWITCH TO USING TEMPFILES!
 # FIX: Only use strings in the current terminal instance
 
-print("Welcome to the Secure Notes Application")
-
 class System():
     """Holds all class objects"""
     def __init__(self):
@@ -69,9 +67,11 @@ class Menu():
         # Does it create the correct date in UTC format?
         # Does it create an altered string for the filename?
 
+    # NOTE: Will call a DB function to show all files in the DB
     def choose_file(self):
-        """Allows a user to select the file they wish to perform an action on
-        Reference: https://builtin.com/data-science/python-list-files-in-directory"""
+        """
+        Allows a user to select the file they wish to perform an action on
+        """
         
         files = [item for item in os.listdir() if os.path.isfile(item)]
         # Change to showing all files on the DB
@@ -80,7 +80,7 @@ class Menu():
         if chosen_file in files:
             return chosen_file
         else:
-            print("I'm sorry, that file doesn't exist. Aborting action, returning to menu.")
+            print("I'm sorry, that file doesn't exist. Please select a file from the ones shown.")
             file = self.choose_file()
             print(file)
 
@@ -88,7 +88,7 @@ class Menu():
             # Disallows invalid files?
             # Correctly returns valid files?
 
-
+    # NOTE: Must first check to see if the file is not already deleted, a DB function
     def confirm_delete(self, file):
         """Ensure user confirms desired deletion"""
         confirmation = False
@@ -125,10 +125,14 @@ class Menu():
         print(decrypted)
 
     def append(self, file):
+        """
+        Receives an encrypted string from the DB. Then, it prompts the user to add to the given string. It then 
+        re-encrypts the content, and saves it to the DB using the appropriate update function.
+        """
         encrypted_content = self.get_encrypted_note_content_from_DB(file)
         decrypted_content = self.get_plaintext(encrypted_content)
         new_content = input(f"{file}: {decrypted_content}\nYou cannot overwrite this data. However, you can add to it. A space is already added:\n")
-        appended_string = " " + decrypted_content + new_content
+        appended_string = decrypted_content + " " + new_content
         self.db.update_note("notes", file, self.security.encrypt_note(appended_string, self.__password))
         # with open(f)
         # self.open_and_wait(file)
@@ -160,9 +164,12 @@ class Menu():
         # Does the function call confirm_delete before calling DB.delete()?
 
     def select(self):
-        """Allow user to select their desired action, gracefully handling invalid input. Converts string input to an integer,
-        and then returns that integer."""
+        """Allow user to select their desired action and file, gracefully handling invalid input. 
+        Converts string input to an integer, and then returns that integer. Calls choose_file for 
+        non-creation actions and calls generate_filename for new_note. It returns the filename and 
+        integer together as a tuple."""
         answer = input("""
+    Note: To exit the program press ^C, (CTRL key, then C key)
     What action would you like to perform?
     (Input the number of the selected action)
         1. Create Note
@@ -174,17 +181,23 @@ class Menu():
         try:
             answer = int(answer)
             if answer in range(1,6):
-                return answer
+                if (answer == 1):
+                    # file = self.generate_filename()
+                    file = "dummy.txt"
+                else:
+                    file = "dummy.txt"
+                    # file = self.choose_file()
+                return (answer, file)
             else:
                 print("""
     Invalid Input. 
     Aborting action and returning to Menu.""")
-                return -1
+                return self.select()
         except ValueError:
             print("""
     Invalid Input. 
     Aborting action and returning to Menu.""")
-        return -1
+        return self.select()
     
     # Test Cases for select():
         # Does it work with valid input (1-5)?
@@ -207,15 +220,13 @@ class Menu():
         # Does it work with valid user input?
 
     # NOTE: Must connect this with choose_file, so that display cannot be called with "None"
-    def act(self, selected_action=None, filename=None):
+    def act(self, selected_action, filename):
         """
         Calls the select function to allow a user to pick their desired action, maps the returned integer to the 
         associated function, and then calls that function. If a filename is not provided, then the program will generate
         a new file by calling the generate_filename function.
         """
-        selected_action = self.select()
-        if filename is None:
-            filename = self.generate_filename()
+
         if selected_action:
             self.possible_actions[selected_action-1](filename)
         else:
@@ -225,9 +236,17 @@ class Menu():
         # Does the index pass a file correctly?
         # Does the index generate a filename if None is specified
 
+    def run(self):
+        print("Welcome to the Secure Notes Application")
+        while True:
+            [action, file] = self.select()
+            self.act(action, file)
+
+
 m = Menu()
 m.db.create_directory("Notes")
-# m.new_note("summarize_link_test.txt")
-m.display_note("summarize_link_test.txt")
-m.append("summarize_link_test.txt")
-m.summarize("summarize_link_test.txt")
+m.run()
+# # m.new_note("summarize_link_test.txt")
+# m.display_note("summarize_link_test.txt")
+# m.append("summarize_link_test.txt")
+# m.summarize("summarize_link_test.txt")
