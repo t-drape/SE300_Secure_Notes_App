@@ -5,7 +5,9 @@ import os
 
 from security_manager import SecurityManager
 from db import DbConnect, _DbConnectError
+from summarizer import Summarizer
 # NOTE: NEED TO SWITCH TO USING TEMPFILES!
+# FIX: Only use strings in the current terminal instance
 
 print("Welcome to the Secure Notes Application")
 
@@ -22,9 +24,10 @@ class Menu():
     def __init__(self):
         self.security = SecurityManager()
         self.db = DbConnect()
+        self.Ai = Summarizer()
         self.__password = self.get_password()
         # This line allows me to make a function call directly by using the returned user choice as an index (allows passing the file still)
-        self.possible_actions = [self.new_note, self.display, self.append, self.summarize, self.delete]
+        self.possible_actions = [self.new_note, self.display_note, self.append, self.summarize, self.delete]
 
     # Helper methods for encryption/decryption
     def get_plaintext(self, encrypted_content : str):
@@ -38,6 +41,7 @@ class Menu():
         return plaintext
 
     def encrypt_and_save(self, plaintext, file):
+
         # encrypt and save to DB
         encrypted = self.security.encrypt_note(plaintext, self.__password)
         if encrypted is None:
@@ -46,7 +50,10 @@ class Menu():
         
         self.db.create_note("notes", file, encrypted)
         
+    # NOTE: Overlapping functionality with encrypt_and_save
+    # NOTE: Move saving functionality into save, move saving out of encrypt_and_save (SOLID Principles)
     def save(self, file):
+
         pass
 
     def generate_filename(self):
@@ -97,44 +104,23 @@ class Menu():
             # Does it return boolean values?
 
     def new_note(self, file):
+
         note = input(f"{file}: ")
         self.encrypt_and_save(note, file)
 
-        # self.encrypt_and_save(file)
-
-
-        # Still need to save the file to the DB
-        # Ensure the file is not empty
-        # Save file
-
-
-
-    # # def __open_and_wait(self, filepath):
-    #     """
-    #     Opens a file with its default application and waits for the application to close.
-    #     Code by Google AI, (Google AI Overview, 2026)
-    #     """
-    #     if platform.system() == "Windows":
-    #         # 'start' command on Windows opens the file using its associated application
-    #         # and requires shell=True to work correctly.
-    #         subprocess.run(['start', filepath], shell=True, check=True)
-    #     elif platform.system() == "Darwin": # macOS
-    #         subprocess.run(['open', filepath], check=True)
-    #     else: # Linux/other POSIX
-    #         # xdg-open is a common utility for this purpose
-    #         subprocess.run(['xdg-open', filepath], check=True)
-    #     print("Finished")
-
-    def display(self, file):
-        """
-        Sources: Google AI overview of reading all lines from a file
-        """
+    def get_encrypted_note_content_from_DB(self, file):
+        """Return file content from the saved note in the DB"""
         encrypted_content = self.db.display_note("Notes", file)
-        decrypted_file_contents = self.get_plaintext(encrypted_content)
-        print(decrypted_file_contents)
-        # with open(file, "r", encoding="utf-8") as f:
-        #     for line in f:
-        #         print(line)
+        return encrypted_content
+
+    def display_note(self, file):
+        """
+        Receives encrypted note content, Calls the appropriate decrypt function, and then prints plaintext to the output window
+        """
+        # encrypted_content = self.db.display_note("Notes", file)
+        # decrypted_file_contents = self.get_plaintext(encrypted_content)
+        decrypted = self.get_plaintext(self.get_encrypted_note_content_from_DB(file))
+        print(decrypted)
 
     def append(self, file):
         pass
@@ -144,13 +130,21 @@ class Menu():
         # Save changes to the file
 
     def summarize(self, file):
-        pass
-        # with open(file, "r") as f:
-        #     content = f.read()
-        # System.ai.summarize(content)
-        # pass
+        """
+        Receives encrypted note content, Calls the appropriate decrypt function, passes the plaintext as
+        a string to the AI class instance summary function, and then prints the returned string to the output window 
+        """
+        decrypted_content = self.get_plaintext(self.get_encrypted_note_content_from_DB(file))
+        if decrypted_content:
+            print((self.Ai.summarize(decrypted_content)))
+        else:
+            print("Error: Could not summarize note.")
 
     def delete(self, file):
+        """
+        Calls confirm_delete to ensure no mistaken hard deletes occur, and then calls the associated
+        DB function to permanently delete the file from memory
+        """
         if self.confirm_delete(file):
             self.db.delete_note("Notes",file)
         else:
@@ -160,7 +154,8 @@ class Menu():
         # Does the function call confirm_delete before calling DB.delete()?
 
     def select(self):
-        """Allow user to select their desired action, gracefully handling invalid input"""
+        """Allow user to select their desired action, gracefully handling invalid input. Converts string input to an integer,
+        and then returns that integer."""
         answer = input("""
     What action would you like to perform?
     (Input the number of the selected action)
@@ -193,6 +188,11 @@ class Menu():
         # Does it return a useful value if the code runs properly?
     
     def get_password(self):
+        """
+        Queries the user for their password. Each file is associated with a password, and can only be decrypted
+        with that exact password. This allows multiple users to have the same DB without exposing their private information.
+        (Assuming all parties have a unique password)
+        """
         password = input("What is your password? ")
         return password
     
@@ -200,10 +200,20 @@ class Menu():
         # Does it work with no user input?
         # Does it work with valid user input?
 
-    def act(self, selected_action, filename=None):
+    # NOTE: Must connect this with choose_file, so that display cannot be called with "None"
+    def act(self, selected_action=None, filename=None):
+        """
+        Calls the select function to allow a user to pick their desired action, maps the returned integer to the 
+        associated function, and then calls that function. If a filename is not provided, then the program will generate
+        a new file by calling the generate_filename function.
+        """
+        selected_action = self.select()
         if filename is None:
             filename = self.generate_filename()
-        self.possible_actions[selected_action-1](filename)
+        if selected_action:
+            self.possible_actions[selected_action-1](filename)
+        else:
+            print("Invalid action. Aborting all further action and returning to menu.")
     # Test cases for act(selected_action, file):
         # Does the index match the correct chosen action?
         # Does the index pass a file correctly?
@@ -211,7 +221,4 @@ class Menu():
 
 m = Menu()
 m.db.create_directory("Notes")
-
-
-# m.open_editor()
-# m.act(4)
+m.summarize("summarize_link_test.txt")
