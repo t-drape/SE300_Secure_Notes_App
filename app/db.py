@@ -182,3 +182,26 @@ class DbConnect:
 
         result = self.cur.fetchone()
         return result[0] if result else None
+
+    def list_in_directory(self, dname: str) -> list[str]:
+        try:
+            self.cur.execute(
+                    f"SELECT note_name FROM {dname}"
+            )
+        except sqlite3.Error as e:
+            raise _DbConnectError(f"Failed to retrieve files in directory {dname}: {e}")
+
+        result = self.cur.fetchall()
+        return result[0] if result else None
+
+    def verify_integrity(self, dname: str, note_name: str) -> bool:
+        try:
+            self.cur.execute(
+                    f"SELECT * FROM {dname} WHERE note_name = ? LIMIT 1",
+                    (note_name,),
+            )
+        except sqlite3.Error as e:
+            raise _DbConnectError(f"Failed to query {dname}: {e}")
+
+        result = self.cur.fetchone()
+        return True if result else False
