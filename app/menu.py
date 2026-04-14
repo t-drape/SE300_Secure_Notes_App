@@ -1,24 +1,17 @@
 import datetime
-import subprocess
-import platform
-import os
 
 from security_manager import SecurityManager
-from db import DbConnect, _DbConnectError
+from db import DbConnect
 from summarizer import Summarizer
 
 
 # NOTE: NEED TO SWITCH TO USING TEMPFILES!
 # FIX: Only use strings in the current terminal instance
 
-
-DB_DIR_NAME = "Notes"
-
-
-
 class Menu():
     """This class implements the requirements defined in the SRD and the features defined in the SDD for the Menu Class"""
     def __init__(self):
+        self.DB_DIR_NAME = "Notes"
         self.security = SecurityManager()
         self.db = DbConnect()
         self.Ai = Summarizer()
@@ -48,7 +41,7 @@ class Menu():
             print("Error: could not encrypt note.")
             return
         
-        self.db.create_note(DB_DIR_NAME, file, encrypted)
+        self.db.create_note(self.DB_DIR_NAME, file, encrypted)
         
     # NOTE: Overlapping functionality with encrypt_and_save
     # FIX: Having two functions does nothing to improve readability. This code is fine. 
@@ -72,7 +65,7 @@ class Menu():
         Allows a user to select the file they wish to perform an action on
         """
 
-        files = self.db.list_in_directory(DB_DIR_NAME)
+        files = self.db.list_in_directory(self.DB_DIR_NAME)
         if files:
             print("All available files: ")
             print(files)
@@ -99,7 +92,7 @@ class Menu():
     # NOTE: Must first check to see if the file is not already deleted, a DB function
     def confirm_delete(self, file):
         """Ensure user confirms desired deletion"""
-        if self.db.verify_integrity(DB_DIR_NAME, file):
+        if self.db.verify_integrity(self.DB_DIR_NAME, file):
             confirmation = False
             answer = input(f"Are you sure you want to delete {file}? This action cannot be reversed. [Y or y for yes]\nAnswer: ").lower()
             if (answer == "y"):
@@ -121,7 +114,7 @@ class Menu():
 
     def get_encrypted_note_content_from_DB(self, file):
         """Return file content from the saved note in the DB"""
-        encrypted_content = self.db.display_note(DB_DIR_NAME, file)
+        encrypted_content = self.db.display_note(self.DB_DIR_NAME, file)
         return encrypted_content
 
     def display_note(self, file):
@@ -140,9 +133,9 @@ class Menu():
         """
         encrypted_content = self.get_encrypted_note_content_from_DB(file)
         decrypted_content = self.get_plaintext(encrypted_content)
-        new_content = input(f"{file}: {decrypted_content}\nYou cannot overwrite this data. However, you can add to it. A space is already added:\n")
-        appended_string = decrypted_content + " " + new_content
-        self.db.update_note(DB_DIR_NAME, file, self.security.encrypt_note(appended_string, self.__password))
+        new_content = input(f"{file}: {decrypted_content}\nYou cannot overwrite this data. However, you can add to it. Make sure to add a space if needed:\n")
+        appended_string = decrypted_content + new_content
+        self.db.update_note(self.DB_DIR_NAME, file, self.security.encrypt_note(appended_string, self.__password))
         # with open(f)
         # self.open_and_wait(file)
         # Ensure the file is not empty
@@ -165,7 +158,7 @@ class Menu():
         DB function to permanently delete the file from memory
         """
         if self.confirm_delete(file):
-            self.db.delete_note(DB_DIR_NAME,file)
+            self.db.delete_note(self.DB_DIR_NAME,file)
         else:
             print("Aborting Deletion.")
     
@@ -186,6 +179,7 @@ class Menu():
         3. Change Note
         4. Summarize Note
         5. Delete Note
+        6. Exit Program
     Answer: """)
         try:
             answer = int(answer)
@@ -198,6 +192,8 @@ class Menu():
                     return (answer, file)
                 else:
                     print("Error with file. Aborting and returning to Menu.")
+            elif (answer == 6):
+                return [answer, None]
             else:
 
                 print("""
@@ -242,8 +238,12 @@ class Menu():
         a new file by calling the generate_filename function.
         """
 
+        if (selected_action == 6):
+            return False
+
         if selected_action:
             self.possible_actions[selected_action-1](filename)
+            return True
         else:
             print("Invalid action. Aborting all further action and returning to Menu.")
     # Test cases for act(selected_action, file):
@@ -253,11 +253,7 @@ class Menu():
 
     def run(self):
         print("Welcome to the Secure Notes Application")
-        while True:
+        run_flag = True
+        while run_flag:
             [action, file] = self.select()
-            self.act(action, file)
-
-
-m = Menu()
-m.db.create_directory(DB_DIR_NAME)
-m.run()
+            run_flag = self.act(action, file)
