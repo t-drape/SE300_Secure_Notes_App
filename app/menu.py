@@ -6,16 +6,15 @@ import os
 from security_manager import SecurityManager
 from db import DbConnect, _DbConnectError
 from summarizer import Summarizer
+
+
 # NOTE: NEED TO SWITCH TO USING TEMPFILES!
 # FIX: Only use strings in the current terminal instance
 
-class System():
-    """Holds all class objects"""
-    def __init__(self):
-        self.menu = Menu()
-        self.security = SecurityManager()
-        # ai = AIProcessor()
-        self.db = DbConnect()
+
+DB_DIR_NAME = "Notes"
+
+
 
 class Menu():
     """This class implements the requirements defined in the SRD and the features defined in the SDD for the Menu Class"""
@@ -49,7 +48,7 @@ class Menu():
             print("Error: could not encrypt note.")
             return
         
-        self.db.create_note("notes", file, encrypted)
+        self.db.create_note(DB_DIR_NAME, file, encrypted)
         
     # NOTE: Overlapping functionality with encrypt_and_save
     # FIX: Having two functions does nothing to improve readability. This code is fine. 
@@ -72,17 +71,26 @@ class Menu():
         """
         Allows a user to select the file they wish to perform an action on
         """
+
+        files = self.db.list_in_directory(DB_DIR_NAME)
+        if files:
+            print("All available files: ")
+            print(files)
+            chosen_file = input("What file? Type it here: ")
+            if chosen_file in files:
+                return chosen_file
+        return None
         
-        files = [item for item in os.listdir() if os.path.isfile(item)]
-        # Change to showing all files on the DB
-        print(files)
-        chosen_file = input("What file would you like to perform this action on?: ")
-        if chosen_file in files:
-            return chosen_file
-        else:
-            print("I'm sorry, that file doesn't exist. Please select a file from the ones shown.")
-            file = self.choose_file()
-            print(file)
+        # files = [item for item in os.listdir() if os.path.isfile(item)]
+        # # Change to showing all files on the DB
+        # print(files)
+        # chosen_file = input("What file would you like to perform this action on?: ")
+        # if chosen_file in files:
+        #     return chosen_file
+        # else:
+        #     print("I'm sorry, that file doesn't exist. Please select a file from the ones shown.")
+        #     file = self.choose_file()
+        #     print(file)
 
         # Test cases for choose_file:
             # Disallows invalid files?
@@ -91,11 +99,12 @@ class Menu():
     # NOTE: Must first check to see if the file is not already deleted, a DB function
     def confirm_delete(self, file):
         """Ensure user confirms desired deletion"""
-        confirmation = False
-        answer = input(f"Are you sure you want to delete {file}? This action cannot be reversed. [Y or y for yes]\nAnswer: ").lower()
-        if (answer == "y"):
-            confirmation = True
-        return confirmation
+        if self.db.verify_integrity(DB_DIR_NAME, file):
+            confirmation = False
+            answer = input(f"Are you sure you want to delete {file}? This action cannot be reversed. [Y or y for yes]\nAnswer: ").lower()
+            if (answer == "y"):
+                confirmation = True
+            return confirmation
     
         # Test Cases for confirm_delete():
             # Does it work with uppercase y (Y)?
@@ -112,7 +121,7 @@ class Menu():
 
     def get_encrypted_note_content_from_DB(self, file):
         """Return file content from the saved note in the DB"""
-        encrypted_content = self.db.display_note("Notes", file)
+        encrypted_content = self.db.display_note(DB_DIR_NAME, file)
         return encrypted_content
 
     def display_note(self, file):
@@ -133,7 +142,7 @@ class Menu():
         decrypted_content = self.get_plaintext(encrypted_content)
         new_content = input(f"{file}: {decrypted_content}\nYou cannot overwrite this data. However, you can add to it. A space is already added:\n")
         appended_string = decrypted_content + " " + new_content
-        self.db.update_note("notes", file, self.security.encrypt_note(appended_string, self.__password))
+        self.db.update_note(DB_DIR_NAME, file, self.security.encrypt_note(appended_string, self.__password))
         # with open(f)
         # self.open_and_wait(file)
         # Ensure the file is not empty
@@ -156,7 +165,7 @@ class Menu():
         DB function to permanently delete the file from memory
         """
         if self.confirm_delete(file):
-            self.db.delete_note("Notes",file)
+            self.db.delete_note(DB_DIR_NAME,file)
         else:
             print("Aborting Deletion.")
     
@@ -182,21 +191,27 @@ class Menu():
             answer = int(answer)
             if answer in range(1,6):
                 if (answer == 1):
-                    # file = self.generate_filename()
-                    file = "dummy.txt"
+                    file = self.generate_filename()
                 else:
-                    file = "dummy.txt"
-                    # file = self.choose_file()
-                return (answer, file)
+                    file = self.choose_file()
+                if file:
+                    return (answer, file)
+                else:
+                    print("Error with file. Aborting and returning to Menu.")
             else:
+
                 print("""
     Invalid Input. 
     Aborting action and returning to Menu.""")
+                
                 return self.select()
+            
         except ValueError:
+
             print("""
     Invalid Input. 
     Aborting action and returning to Menu.""")
+            
         return self.select()
     
     # Test Cases for select():
@@ -230,7 +245,7 @@ class Menu():
         if selected_action:
             self.possible_actions[selected_action-1](filename)
         else:
-            print("Invalid action. Aborting all further action and returning to menu.")
+            print("Invalid action. Aborting all further action and returning to Menu.")
     # Test cases for act(selected_action, file):
         # Does the index match the correct chosen action?
         # Does the index pass a file correctly?
@@ -244,9 +259,5 @@ class Menu():
 
 
 m = Menu()
-m.db.create_directory("Notes")
+m.db.create_directory(DB_DIR_NAME)
 m.run()
-# # m.new_note("summarize_link_test.txt")
-# m.display_note("summarize_link_test.txt")
-# m.append("summarize_link_test.txt")
-# m.summarize("summarize_link_test.txt")

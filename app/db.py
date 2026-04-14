@@ -192,7 +192,10 @@ class DbConnect:
             raise _DbConnectError(f"Failed to retrieve files in directory {dname}: {e}")
 
         result = self.cur.fetchall()
-        return result[0] if result else None
+        list_files = []
+        for r in result:
+            list_files += list(r)
+        return list_files if result else None
 
     def verify_integrity(self, dname: str, note_name: str) -> bool:
         try:
