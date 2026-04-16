@@ -1,0 +1,6 @@
+Changes we've made through the development process:
+    1. Refine the Project Structure to better utilize the object-oriented nature of Python
+        In the SDD, we noted that we would have 4 separate modules, and all interactions between them would be through function calls. As we developed the SUD,
+        we realized that we should change our project structure to reflect what we now have. We moved the auxiliary "feature" modules into the Menu class, creating 
+        an instance of each upon running the program. This lets us have an individual instance of each feature that gets __deleted once the parent (Menu) object is __deleted.
+        This change also made integration much easier and enhanced security, as these feature modules are no longer global, but live inside each Menu instance as a class variable.

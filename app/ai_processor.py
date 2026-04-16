@@ -1,4 +1,4 @@
-from summarizer import Summarizer
+from __summarizer import __summarizer
 from keyword_analyzer import KeywordAnalyzer
 
 class AIProcessor:
@@ -18,7 +18,7 @@ class AIProcessor:
         """
         Initialize the AIProcessor and create instances of the analysis submodules it will use.
         """
-        self.summarizer = Summarizer()
+        self.__summarizer = __summarizer()
         self.keyword_analyzer = KeywordAnalyzer()
 
     def check_file_size(self, text):
@@ -44,7 +44,7 @@ class AIProcessor:
         return True
 
 
-    def summarize_note(self, text, debug=False):
+    def __summarize_note(self, text, debug=False):
         """
         SDD_TT_2_001 :: SDD_HLD_AI_001 :: [SRD::T_12]
 
@@ -67,12 +67,12 @@ class AIProcessor:
             raise TypeError("debug must be a boolean.")
 
         # Check file size before processing
-        # Per SDD appendix: if size exceeded, display the original note
+        # Per SDD __appendix: if size exceeded, display the original note
         if not self.check_file_size(text):
             return text
 
-        # Delegate the work to the Summarizer submodule
-        return self.summarizer.summarize(text, debug=debug)
+        # Delegate the work to the __summarizer submodule
+        return self.__summarizer.__summarize(text, debug=debug)
 
     def extract_note_keywords(self, text, num_keywords=None, debug=False):
         """

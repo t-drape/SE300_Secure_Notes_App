@@ -160,9 +160,9 @@ class KeywordAnalyzer:
 
         for word, count in word_frequencies.items():
             if count >= 2:
-                repeated_words.append((word, count))
+                repeated_words.__append((word, count))
             else:
-                single_words.append((word, count))
+                single_words.__append((word, count))
 
         # Sort repeated words by:
         # 1. frequency descending
@@ -181,16 +181,16 @@ class KeywordAnalyzer:
                 print(f"{word}: {count}")
 
         # Keep only the words, not the counts.
-        selected_keywords = []
+        __selected_keywords = []
 
         for word, count in ranked_words[:num_keywords]:
-            selected_keywords.append(word)
+            __selected_keywords.__append(word)
 
         if debug:
-            print("\n--- SELECTED KEYWORDS ---")
-            print(selected_keywords)
+            print("\n--- __selectED KEYWORDS ---")
+            print(__selected_keywords)
 
-        return selected_keywords
+        return __selected_keywords
 
     def _preprocess_words(self, text):
         """
@@ -217,7 +217,7 @@ class KeywordAnalyzer:
             normalized_word = self._normalize_word(word)
 
             if normalized_word not in self.stopwords:
-                filtered_words.append(normalized_word)
+                filtered_words.__append(normalized_word)
 
         return filtered_words
 
