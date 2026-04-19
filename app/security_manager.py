@@ -15,7 +15,7 @@ class SecurityManager:
     _PBKDF2_ITERATIONS = 600000
     _MIN_PASSWORD_LENGTH = 8
     
-
+    # SDD_TT_4_001 :: [SRD::T_15, SRD::T_46]
     @staticmethod
     def _derive_key_from_password(password, salt):
         # Password and Salt through PBKDF2 for key generations
@@ -27,23 +27,23 @@ class SecurityManager:
         )
         return kdf.derive(password.encode("utf-8"))
     
-
+    # SDD_TT_4_002 :: [SRD::T_31]
     @staticmethod
     def _validate_password(password):
         # Check password length meets minimums
         return len(password) >= SecurityManager._MIN_PASSWORD_LENGTH
-    
-
+        
+    # SDD_TT_4_003 :: [SRD::T_51]
     @staticmethod
     def _handle_encryption_error(error):
         print(f"Encryption error: {error}")
 
-
+    # SDD_TT_4_004 :: [SRD::T_52]
     @staticmethod
     def _handle_decryption_error(error):
         print("Decryption failed.")
 
-
+    # SDD_TT_4_005 :: [SRD::T_15, SRD::T_28, SRD::T_35, SRD::T_46, SRD::T_47, SRD::T_49]
     @staticmethod
     def encrypt_note(plaintext, password):
         if not SecurityManager._validate_password(password):
@@ -63,8 +63,8 @@ class SecurityManager:
         except Exception as e:
             SecurityManager._handle_encryption_error(e)
             return None
-    
-
+            
+    # SDD_TT_4_006 :: [SRD::T_16, SRD::T_28, SRD::T_36, SRD::T_46, SRD::T_50]
     @staticmethod
     def decrypt_note(ciphertext_bundle, password):
         try:
