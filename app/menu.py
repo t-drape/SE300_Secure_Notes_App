@@ -1,3 +1,15 @@
+"""
+Author: TJ Drape
+Purpose: 
+    Implement the Menu class based on the SDD and SRD documents.
+    This class acts as the decision and distribution hub of the SUD. Its main
+    purpose is to link user action to the relevant feature classes and actions.
+Date: April 24th, 2026
+Sources of Help:
+    Google AI overviews => (Google AI, 2026)
+
+Trace Tags: SDD_HLD_01_MENU 
+"""
 import datetime
 
 from security_manager import SecurityManager
@@ -9,8 +21,18 @@ from summarizer import Summarizer
 # FIX: Only use strings in the current terminal instance
 
 class Menu():
-    """This class implements the requirements defined in the SRD and the features defined in the SDD for the Menu Class"""
+    """
+    This class implements the requirements defined in the SRD and the features defined in the SDD for the Menu Class
+    """
     def __init__(self):
+        """
+        Initialize Feature classes and class variables
+
+        Trace Tags: SDD_HLD_MENU_002
+                        SRD_T_30
+                        SRD_T_31
+                        SRD_T_39
+        """
         self.DB_DIR_NAME = "Notes"
         self.security = SecurityManager()
         self.db = DbConnect()
@@ -18,9 +40,20 @@ class Menu():
         self.__password = self.get_password()
         # This line allows me to make a function call directly by using the returned user choice as an index (allows passing the file still)
         self.possible_actions = [self.new_note, self.display_note, self.append, self.summarize, self.delete]
+        self.possible_actions_as_strings_for_display = ["Create Note", "Display Note", "Change Note", "Summarize Note", "Delete Note"]
 
     # Helper methods for encryption/decryption
     def get_plaintext(self, encrypted_content : str):
+        """
+        Get encrypted file content as a string, call the appropriate feature function to decrypt,
+        and return a decrypt4ed string
+
+        Trace Tags: SDD_HLD_MENU_002
+                        SRD_T_21
+                        SRD_T_44
+                        SRD_T_45
+        """
+
         # get encrypted bytes from DB and decrypt it
         # encrypted_data = System.db.get_note(file)
         # with open(file, "rb") as f:
@@ -34,6 +67,15 @@ class Menu():
         """
         Receives the plaintext string of the note's content and the filename, encrypts the string, and then
         calls the appropriate DB function to save the note persistently.
+
+        Trace Tags: SDD_HLD_MENU_002
+                        SDD_TT_3_001
+                            SRD_T_05
+                            SRD_T_19
+                            SRD_T_21
+                            SRD_T_44
+                            SRD_T_45
+
         """
         # encrypt and save to DB
         encrypted = self.security.encrypt_note(plaintext, self.__password)
@@ -47,7 +89,12 @@ class Menu():
     # FIX: Having two functions does nothing to improve readability. This code is fine. 
 
     def generate_filename(self):
-        """Generate the filename for a new note based on the current date and current time (down to the second)"""
+        """
+        Generate the filename for a new note based on the current date and current time (down to the second)
+        
+        Trace Tags: SDD_HLD_MENU_001
+                        SDD_TT_3_002
+        """
         # Use UTC for creating multiple files on the same day / no errors with timezone changes
         filename = datetime.datetime.now()
         # A file cannot be created in under 1 second, at least for humans
@@ -63,6 +110,12 @@ class Menu():
     def choose_file(self):
         """
         Allows a user to select the file they wish to perform an action on
+
+        Trace Tags: SDD_HLD_MENU_002, SDD_HLD_MENU_003
+                        SDD_TT_3_003
+                            SRD_T_21
+                            SRD_T_44
+                            SRD_T_45
         """
 
         files = self.db.list_in_directory(self.DB_DIR_NAME)
@@ -72,6 +125,8 @@ class Menu():
             chosen_file = input("What file? Type it here: ")
             if chosen_file in files:
                 return chosen_file
+            else:
+                print("Error: No such file exists. Are you sure you typed the filename correctly?")
         return None
         
         # files = [item for item in os.listdir() if os.path.isfile(item)]
@@ -91,7 +146,16 @@ class Menu():
 
     # NOTE: Must first check to see if the file is not already deleted, a DB function
     def confirm_delete(self, file):
-        """Ensure user confirms desired deletion"""
+        """
+        Ensure user confirms desired deletion
+        
+        Trace Tags: SDD_HLD_MENU_001, SDD_HLD_MENU_003
+                        SDD_TT_3_004
+                            SRD_T_20
+                            SRD_T_21
+                            SRD_T_43
+                            SRD_T_44
+        """
         if self.db.verify_integrity(self.DB_DIR_NAME, file):
             confirmation = False
             answer = input(f"Are you sure you want to delete {file}? This action cannot be reversed. [Y or y for yes]\nAnswer: ").lower()
@@ -108,18 +172,40 @@ class Menu():
     def new_note(self, file):
         """
         Allow a user to create a new note using the terminal
+
+        Trace Tags: SDD_HLD_MENU_003
+                        SDD_TT_3_005
+                            SRD_T_05
+                            SRD_T_06
+                            SRD_T_11
+                            SRD_T_21
+                            SRD_T_44
+                            SRD_T_45
         """
         note = input(f"{file}: ")
-        self.encrypt_and_save(note, file)
+        if note:
+            self.encrypt_and_save(note, file)
+        else:
+            print("Error: Please write something in the note for it to save.")
 
     def get_encrypted_note_content_from_DB(self, file):
-        """Return file content from the saved note in the DB"""
+        """
+        Return file content from the saved note in the DB
+
+        Trace Tags: SDD_HLD_MENU_002
+                        SRD_T_05
+        """
         encrypted_content = self.db.display_note(self.DB_DIR_NAME, file)
         return encrypted_content
 
     def display_note(self, file):
         """
         Receives encrypted note content, Calls the appropriate decrypt function, and then prints plaintext to the output window
+
+        Trace Tags: SDD_HLD_MENU_003
+                        SDD_TT_3_006
+                            SRD_T_14
+                            SRD_T_05
         """
         # encrypted_content = self.db.display_note("Notes", file)
         # decrypted_file_contents = self.get_plaintext(encrypted_content)
@@ -130,10 +216,15 @@ class Menu():
         """
         Receives an encrypted string from the DB. Then, it prompts the user to add to the given string. It then 
         re-encrypts the content, and saves it to the DB using the appropriate update function.
+
+        Trace Tags: SDD_HLD_MENU_OO2, SDD_HLD_MENU_003
+                        SDD_TT_3_007
+                            SRD_T_13
+                            SRD_T_43
         """
         encrypted_content = self.get_encrypted_note_content_from_DB(file)
         decrypted_content = self.get_plaintext(encrypted_content)
-        new_content = input(f"{file}: {decrypted_content}\nYou cannot overwrite this data. However, you can add to it. Make sure to add a space if needed:\n")
+        new_content = input(f"{file}: {decrypted_content}\nYou cannot overwrite this data. However, you can add to it. To make no changes, simply press Enter. Make sure to add a space if needed:\n")
         appended_string = decrypted_content + new_content
         self.db.update_note(self.DB_DIR_NAME, file, self.security.encrypt_note(appended_string, self.__password))
         # with open(f)
@@ -145,6 +236,11 @@ class Menu():
         """
         Receives encrypted note content, Calls the appropriate decrypt function, passes the plaintext as
         a string to the AI class instance summary function, and then prints the returned string to the output window 
+
+        Trace Tags: SDD_HLD_MENU_002, SDD_HLD_MENU_003
+                        SDD_TT_3_008
+                            SRD_T_12
+                            SRD_T_45
         """
         decrypted_content = self.get_plaintext(self.get_encrypted_note_content_from_DB(file))
         if decrypted_content:
@@ -156,6 +252,12 @@ class Menu():
         """
         Calls confirm_delete to ensure no mistaken hard deletes occur, and then calls the associated
         DB function to permanently delete the file from memory
+
+        Trace Tags: SDD_HLD_MENU_002, SDD_HLD_MENU_003
+                        SDD_TT_3_09
+                            SRD_T_23
+                            SRD_T_44
+                            SRD_T_45
         """
         if self.confirm_delete(file):
             self.db.delete_note(self.DB_DIR_NAME,file)
@@ -166,10 +268,22 @@ class Menu():
         # Does the function call confirm_delete before calling DB.delete()?
 
     def select(self):
-        """Allow user to select their desired action and file, gracefully handling invalid input. 
+        """
+        Allow user to select their desired action and file, gracefully handling invalid input. 
         Converts string input to an integer, and then returns that integer. Calls choose_file for 
         non-creation actions and calls generate_filename for new_note. It returns the filename and 
-        integer together as a tuple."""
+        integer together as a tuple.
+        
+        Trace Tags: SDD_HLD_MENU_001, SDD_HLD_MENU_003
+                        SDD_TT_3_010
+                            SRD_T_03
+                            SRD_T_21
+                            SRD_T_22
+                            SRD_T_29
+                            SRD_T_30
+                            SRD_T_44
+                            SRD_T_45
+        """
         answer = input("""
     Note: To exit the program press ^C, (CTRL key, then C key)
     What action would you like to perform?
@@ -184,6 +298,7 @@ class Menu():
         try:
             answer = int(answer)
             if answer in range(1,6):
+                print(f"Selected Action: {self.possible_actions_as_strings_for_display[answer-1]}")
                 if (answer == 1):
                     file = self.generate_filename()
                 else:
@@ -193,6 +308,7 @@ class Menu():
                 else:
                     print("Error with file. Aborting and returning to Menu.")
             elif (answer == 6):
+                print("Exiting the Secure Notes Application")
                 return [answer, None]
             else:
 
@@ -222,6 +338,11 @@ class Menu():
         Queries the user for their password. Each file is associated with a password, and can only be decrypted
         with that exact password. This allows multiple users to have the same DB without exposing their private information.
         (Assuming all parties have a unique password)
+
+        Trace Tags: SDD_HLD_MENU_003
+                        SDD_TT_3_011
+                            SRD_T_28
+                            SRD_T_31
         """
         password = input("What is your password? ")
         return password
@@ -236,6 +357,14 @@ class Menu():
         Calls the select function to allow a user to pick their desired action, maps the returned integer to the 
         associated function, and then calls that function. If a filename is not provided, then the program will generate
         a new file by calling the generate_filename function.
+
+        Trace Tags: SDD_HLD_MENU_002, SDD_HLD_MENU_003
+                        SDD_TT_3_012
+                            SRD_T_02
+                            SRD_T_04
+                            SRD_T_21
+                            SRD_T_44
+                            SRD_T_45
         """
 
         if (selected_action == 6):
@@ -252,8 +381,15 @@ class Menu():
         # Does the index generate a filename if None is specified
 
     def run(self):
+        """
+        Control SUD runtime flow, exit controls, and loop functionality
+
+        Trace Tags: SDD_HLD_MENU_001, SDD_HLD_MENU_003
+                        SRD_T_04
+        """
         print("Welcome to the Secure Notes Application")
         run_flag = True
         while run_flag:
             [action, file] = self.select()
             run_flag = self.act(action, file)
+        print("Thank you for using our software.")
