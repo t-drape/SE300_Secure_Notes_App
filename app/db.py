@@ -163,7 +163,7 @@ class DbConnect:
 
         return self.cur.rowcount > 0
 
-    # SDD_TT_1_005 :: [SRD::T_14]
+    # SDD_TT_1_003 :: [SRD::T_14]
     def display_note(self, dname: str, note_name: str) -> Optional[str]:
         """
         Retrieves the content of a note by name.
