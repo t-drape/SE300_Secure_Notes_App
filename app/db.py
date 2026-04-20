@@ -31,6 +31,7 @@ class DbConnect:
         """Commits the current transaction."""
         self._con.commit()
 
+    #Future Update
     def create_directory(self, dname: str) -> bool:
         """
         Creates a new directory, represented as a separate table in the database.
@@ -68,6 +69,7 @@ class DbConnect:
 
         raise _DbConnectError(f"Directory '{dname}' could not be verified after creation.")
 
+    # SDD_TT_1_001 :: [SRD::T_11, SRD::T_19]
     def create_note(self, dname: str, note_name: str, content: str) -> Optional[int]:
         """
         Creates a new note in the specified directory.
@@ -96,6 +98,7 @@ class DbConnect:
 
         return self.cur.lastrowid
 
+    # Future update
     def get_directories(self) -> list[str]:
         """
         Retrieves all user-created directories (tables) in the database.
@@ -108,6 +111,7 @@ class DbConnect:
         )
         return [row[0] for row in self.cur.fetchall()]
 
+    # SDD_TT_1_002 :: [SRD::T_23]
     def delete_note(self, dname: str, note_name: str) -> bool:
         """
         Hard-deletes a note from the specified directory.
@@ -132,6 +136,7 @@ class DbConnect:
 
         return self.cur.rowcount > 0
 
+    # SDD_TT_1_004 :: [SRD::T_13]
     def update_note(self, dname: str, note_name: str, content: str) -> bool:
         """
         Updates the content of an existing note.
@@ -158,6 +163,7 @@ class DbConnect:
 
         return self.cur.rowcount > 0
 
+    # SDD_TT_1_005 :: [SRD::T_14]
     def display_note(self, dname: str, note_name: str) -> Optional[str]:
         """
         Retrieves the content of a note by name.
@@ -183,6 +189,7 @@ class DbConnect:
         result = self.cur.fetchone()
         return result[0] if result else None
 
+    # SDD_TT_1_005 :: [SRD::T_14]
     def list_in_directory(self, dname: str) -> list[str]:
         try:
             self.cur.execute(
