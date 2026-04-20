@@ -1,22 +1,8 @@
 """
-<<<<<<< HEAD
 This file completes the requirements described in our SRD and SDD for the Menu class.
 Trace Tag: [SDD_HLD_01_MENU]
 """
 
-=======
-Author: TJ Drape
-Purpose: 
-    Implement the Menu class based on the SDD and SRD documents.
-    This class acts as the decision and distribution hub of the SUD. Its main
-    purpose is to link user action to the relevant feature classes and actions.
-Date: April 24th, 2026
-Sources of Help:
-    Google AI overviews => (Google AI, 2026)
-
-Trace Tags: SDD_HLD_01_MENU 
-"""
->>>>>>> trace_tags
 import datetime
 
 from security_manager import SecurityManager
