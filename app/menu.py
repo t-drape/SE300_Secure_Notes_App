@@ -29,6 +29,9 @@ class Menu():
         Initialize Feature classes and class variables
 
         Trace Tags: SDD_HLD_MENU_002
+                        SRD_T_30
+                        SRD_T_31
+                        SRD_T_39
         """
         self.DB_DIR_NAME = "Notes"
         self.security = SecurityManager()
@@ -37,6 +40,7 @@ class Menu():
         self.__password = self.get_password()
         # This line allows me to make a function call directly by using the returned user choice as an index (allows passing the file still)
         self.possible_actions = [self.new_note, self.display_note, self.append, self.summarize, self.delete]
+        self.possible_actions_as_strings_for_display = ["Create Note", "Display Note", "Change Note", "Summarize Note", "Delete Note"]
 
     # Helper methods for encryption/decryption
     def get_plaintext(self, encrypted_content : str):
@@ -45,6 +49,9 @@ class Menu():
         and return a decrypt4ed string
 
         Trace Tags: SDD_HLD_MENU_002
+                        SRD_T_21
+                        SRD_T_44
+                        SRD_T_45
         """
 
         # get encrypted bytes from DB and decrypt it
@@ -63,6 +70,11 @@ class Menu():
 
         Trace Tags: SDD_HLD_MENU_002
                         SDD_TT_3_001
+                            SRD_T_05
+                            SRD_T_19
+                            SRD_T_21
+                            SRD_T_44
+                            SRD_T_45
 
         """
         # encrypt and save to DB
@@ -101,6 +113,9 @@ class Menu():
 
         Trace Tags: SDD_HLD_MENU_002, SDD_HLD_MENU_003
                         SDD_TT_3_003
+                            SRD_T_21
+                            SRD_T_44
+                            SRD_T_45
         """
 
         files = self.db.list_in_directory(self.DB_DIR_NAME)
@@ -110,6 +125,8 @@ class Menu():
             chosen_file = input("What file? Type it here: ")
             if chosen_file in files:
                 return chosen_file
+            else:
+                print("Error: No such file exists. Are you sure you typed the filename correctly?")
         return None
         
         # files = [item for item in os.listdir() if os.path.isfile(item)]
@@ -134,6 +151,10 @@ class Menu():
         
         Trace Tags: SDD_HLD_MENU_001, SDD_HLD_MENU_003
                         SDD_TT_3_004
+                            SRD_T_20
+                            SRD_T_21
+                            SRD_T_43
+                            SRD_T_44
         """
         if self.db.verify_integrity(self.DB_DIR_NAME, file):
             confirmation = False
@@ -154,12 +175,26 @@ class Menu():
 
         Trace Tags: SDD_HLD_MENU_003
                         SDD_TT_3_005
+                            SRD_T_05
+                            SRD_T_06
+                            SRD_T_11
+                            SRD_T_21
+                            SRD_T_44
+                            SRD_T_45
         """
         note = input(f"{file}: ")
-        self.encrypt_and_save(note, file)
+        if note:
+            self.encrypt_and_save(note, file)
+        else:
+            print("Error: Please write something in the note for it to save.")
 
     def get_encrypted_note_content_from_DB(self, file):
-        """Return file content from the saved note in the DB"""
+        """
+        Return file content from the saved note in the DB
+
+        Trace Tags: SDD_HLD_MENU_002
+                        SRD_T_05
+        """
         encrypted_content = self.db.display_note(self.DB_DIR_NAME, file)
         return encrypted_content
 
@@ -169,6 +204,8 @@ class Menu():
 
         Trace Tags: SDD_HLD_MENU_003
                         SDD_TT_3_006
+                            SRD_T_14
+                            SRD_T_05
         """
         # encrypted_content = self.db.display_note("Notes", file)
         # decrypted_file_contents = self.get_plaintext(encrypted_content)
@@ -182,10 +219,12 @@ class Menu():
 
         Trace Tags: SDD_HLD_MENU_OO2, SDD_HLD_MENU_003
                         SDD_TT_3_007
+                            SRD_T_13
+                            SRD_T_43
         """
         encrypted_content = self.get_encrypted_note_content_from_DB(file)
         decrypted_content = self.get_plaintext(encrypted_content)
-        new_content = input(f"{file}: {decrypted_content}\nYou cannot overwrite this data. However, you can add to it. Make sure to add a space if needed:\n")
+        new_content = input(f"{file}: {decrypted_content}\nYou cannot overwrite this data. However, you can add to it. To make no changes, simply press Enter. Make sure to add a space if needed:\n")
         appended_string = decrypted_content + new_content
         self.db.update_note(self.DB_DIR_NAME, file, self.security.encrypt_note(appended_string, self.__password))
         # with open(f)
@@ -200,6 +239,8 @@ class Menu():
 
         Trace Tags: SDD_HLD_MENU_002, SDD_HLD_MENU_003
                         SDD_TT_3_008
+                            SRD_T_12
+                            SRD_T_45
         """
         decrypted_content = self.get_plaintext(self.get_encrypted_note_content_from_DB(file))
         if decrypted_content:
@@ -214,6 +255,9 @@ class Menu():
 
         Trace Tags: SDD_HLD_MENU_002, SDD_HLD_MENU_003
                         SDD_TT_3_09
+                            SRD_T_23
+                            SRD_T_44
+                            SRD_T_45
         """
         if self.confirm_delete(file):
             self.db.delete_note(self.DB_DIR_NAME,file)
@@ -233,6 +277,12 @@ class Menu():
         Trace Tags: SDD_HLD_MENU_001, SDD_HLD_MENU_003
                         SDD_TT_3_010
                             SRD_T_03
+                            SRD_T_21
+                            SRD_T_22
+                            SRD_T_29
+                            SRD_T_30
+                            SRD_T_44
+                            SRD_T_45
         """
         answer = input("""
     Note: To exit the program press ^C, (CTRL key, then C key)
@@ -248,6 +298,7 @@ class Menu():
         try:
             answer = int(answer)
             if answer in range(1,6):
+                print(f"Selected Action: {self.possible_actions_as_strings_for_display[answer-1]}")
                 if (answer == 1):
                     file = self.generate_filename()
                 else:
@@ -257,6 +308,7 @@ class Menu():
                 else:
                     print("Error with file. Aborting and returning to Menu.")
             elif (answer == 6):
+                print("Exiting the Secure Notes Application")
                 return [answer, None]
             else:
 
@@ -289,6 +341,8 @@ class Menu():
 
         Trace Tags: SDD_HLD_MENU_003
                         SDD_TT_3_011
+                            SRD_T_28
+                            SRD_T_31
         """
         password = input("What is your password? ")
         return password
@@ -308,6 +362,9 @@ class Menu():
                         SDD_TT_3_012
                             SRD_T_02
                             SRD_T_04
+                            SRD_T_21
+                            SRD_T_44
+                            SRD_T_45
         """
 
         if (selected_action == 6):
@@ -335,3 +392,4 @@ class Menu():
         while run_flag:
             [action, file] = self.select()
             run_flag = self.act(action, file)
+        print("Thank you for using our software.")
