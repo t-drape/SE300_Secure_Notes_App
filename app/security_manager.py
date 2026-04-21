@@ -46,7 +46,7 @@ class SecurityManager:
     # SDD_TT_4_005 :: [SRD::T_15, SRD::T_28, SRD::T_35, SRD::T_46, SRD::T_47, SRD::T_49]
     @staticmethod
     def encrypt_note(plaintext, password):
-        if not SecurityManager._validate_password(password):
+        if not SecurityManager.validate_password(password):
             SecurityManager._handle_encryption_error("Password does not meet minimum requirements")
             return None
         try:
