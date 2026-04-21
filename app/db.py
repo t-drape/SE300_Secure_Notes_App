@@ -61,7 +61,7 @@ class DbConnect:
             raise _DbConnectError(f"Failed to create directory '{dname}': {e}")
 
         result = self.cur.execute(
-            "__select name FROM sqlite_master WHERE name = ?", (dname,)
+            "SELECT name FROM sqlite_master WHERE name = ?", (dname,)
         ).fetchone()
 
         if result and result[0] == dname:
@@ -107,32 +107,32 @@ class DbConnect:
             A list of directory names, excluding internal SQLite tables.
         """
         self.cur.execute(
-            "__select name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+            "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
         )
         return [row[0] for row in self.cur.fetchall()]
 
     # SDD_TT_1_002 :: [SRD::T_23]
     def delete_note(self, dname: str, note_name: str) -> bool:
         """
-        Hard-__deletes a note from the specified directory.
+        Hard-deletes a note from the specified directory.
 
         Args:
             dname:     The directory (table) containing the note.
-            note_name: The name of the note to __delete.
+            note_name: The name of the note to delete.
 
         Returns:
-            True if a note was __deleted, False if no matching note was found.
+            True if a note was deleted, False if no matching note was found.
 
         Raises:
-            _DbConnectError: If the __delete operation fails.
+            _DbConnectError: If the delete operation fails.
         """
         try:
             self.cur.execute(
-                f"__delete FROM {dname} WHERE note_name = ?", (note_name,)
+                f"DELETE FROM {dname} WHERE note_name = ?", (note_name,)
             )
             self._commit()
         except sqlite3.Error as e:
-            raise _DbConnectError(f"Failed to __delete note '{note_name}': {e}")
+            raise _DbConnectError(f"Failed to delete note '{note_name}': {e}")
 
         return self.cur.rowcount > 0
 
@@ -180,7 +180,7 @@ class DbConnect:
         """
         try:
             self.cur.execute(
-                f"select content FROM {dname} WHERE note_name = ? LIMIT 1",
+                f"SELECT content FROM {dname} WHERE note_name = ? LIMIT 1",
                 (note_name,),
             )
         except sqlite3.Error as e:
@@ -193,7 +193,7 @@ class DbConnect:
     def list_in_directory(self, dname: str) -> list[str]:
         try:
             self.cur.execute(
-                    f"select note_name FROM {dname}"
+                    f"SELECT note_name FROM {dname}"
             )
         except sqlite3.Error as e:
             raise _DbConnectError(f"Failed to retrieve files in directory {dname}: {e}")
@@ -207,7 +207,7 @@ class DbConnect:
     def verify_integrity(self, dname: str, note_name: str) -> bool:
         try:
             self.cur.execute(
-                    f"__select * FROM {dname} WHERE note_name = ? LIMIT 1",
+                    f"SELECT * FROM {dname} WHERE note_name = ? LIMIT 1",
                     (note_name,),
             )
         except sqlite3.Error as e:
