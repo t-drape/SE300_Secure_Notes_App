@@ -29,7 +29,7 @@ class SecurityManager:
     
     # SDD_TT_4_002 :: [SRD::T_31]
     @staticmethod
-    def _validate_password(password):
+    def validate_password(password):
         # Check password length meets minimums
         return len(password) >= SecurityManager._MIN_PASSWORD_LENGTH
         
