@@ -344,8 +344,12 @@ class Menu():
                             SRD_T_28
                             SRD_T_31
         """
-        password = input("What is your password? ")
-        return password
+        password = input("Enter your password (minimum 8 characters): ")
+        if SecurityManager.validate_password(password):
+            return password
+        else:
+            print("Password does not meet minimum requirements")
+            return self.get_password()
     
     # Test cases for get_password():
         # Does it work with no user input?
