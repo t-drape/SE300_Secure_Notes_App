@@ -505,6 +505,7 @@ class Menu():
         Trace Tags: SDD_HLD_MENU_001, SDD_HLD_MENU_003
                         SRD_T_04
         """
+        self.db.create_directory(self.DB_DIR_NAME)
         print("Welcome to the Secure Notes Application")
         run_flag = True
         while run_flag:
