@@ -1,4 +1,4 @@
-from __summarizer import __summarizer
+from summarizer import Summarizer
 from keyword_analyzer import KeywordAnalyzer
 
 class AIProcessor:
@@ -18,7 +18,7 @@ class AIProcessor:
         """
         Initialize the AIProcessor and create instances of the analysis submodules it will use.
         """
-        self.__summarizer = __summarizer()
+        self.__summarizer = Summarizer()
         self.keyword_analyzer = KeywordAnalyzer()
 
     def check_file_size(self, text):
